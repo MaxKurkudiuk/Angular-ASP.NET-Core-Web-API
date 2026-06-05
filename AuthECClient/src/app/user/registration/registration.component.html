@@ -5,14 +5,42 @@
   <div class="mb-3">
     <input class="form-control bg-body-secondary" 
     placeholder="Full Name" formControlName="fullName">
+    @if (hasDisplayableError('fullName') && form.controls.fullName.hasError('required')) {
+      <div class="error-feedback">
+        Please enter your full name.
+      </div>
+    }
   </div>
   <div class="mb-3">
     <input class="form-control bg-body-secondary" 
     placeholder="Email" formControlName="email">
+    @if (hasDisplayableError('email')) {
+      <div class="error-feedback">
+        @if (form.controls.email.hasError('required')) {
+          Please enter your email address.
+        }
+        @if (form.controls.email.hasError('email')) {
+          Please enter a valid email address.
+        }
+      </div>
+    }
   </div>
   <div class="mb-3">
     <input class="form-control bg-body-secondary" 
-    placeholder="Password" formControlName="password" type="password">
+    placeholder="Password" formControlName="password">
+    @if (hasDisplayableError('password')) {
+      <div class="error-feedback">
+        @if (form.controls.password.hasError('required')) {
+          <div>Please enter your password.</div>
+        }
+        @if (form.controls.password.hasError('minlength')) {
+          <div>At least 6 characters required.</div>
+        }
+        @if (form.controls.password.hasError('pattern')) {
+          <div>One or more specific character(s).</div>
+        }
+      </div>
+    }
   </div>
   <div class="mb-3">
     <input class="form-control bg-body-secondary" 
