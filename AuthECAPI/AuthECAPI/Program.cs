@@ -1,5 +1,4 @@
 using AuthECAPI.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -13,7 +12,7 @@ builder.Services.AddOpenApi();
 
 // Service from Identity Core
 builder.Services
-    .AddIdentityApiEndpoints<IdentityUser>()
+    .AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -35,5 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGroup("/api")
+    .MapIdentityApi<AppUser>();
 
 app.Run();
