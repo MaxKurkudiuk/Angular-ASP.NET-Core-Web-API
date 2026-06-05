@@ -1,4 +1,6 @@
 using AuthECAPI.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -14,6 +16,12 @@ builder.Services.AddOpenApi();
 builder.Services
     .AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.User.RequireUniqueEmail = true;
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
@@ -37,5 +45,23 @@ app.MapControllers();
 
 app.MapGroup("/api")
     .MapIdentityApi<AppUser>();
+
+app.MapPost("/api/signup", async (
+    UserManager<AppUser> userManager,
+    [FromBody] UserRegiastrationModel userRegiastrationModel
+    ) => {
+        AppUser user = new() {
+            UserName = userRegiastrationModel.Email,
+            Email = userRegiastrationModel.Email,
+            FullName = userRegiastrationModel.FullName
+        };
+        var result = await userManager.CreateAsync(
+            user, 
+            userRegiastrationModel.Password);
+
+        if (result.Succeeded)
+            return Results.Ok(result);
+        return Results.BadRequest(result);
+});
 
 app.Run();
