@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
 import { AuchService } from '../../shared/services/auch.service';
 import { ToastrService } from 'ngx-toastr';
@@ -35,6 +35,7 @@ export class Registration {
         password: ['', [
             Validators.required,
             Validators.minLength(6),
+            uppercaseCharacterValidator(),
             Validators.pattern(/(?=.*[^a-zA-Z0-9 ])/)]],
         confirmPassword: ['']
     }, { validators: this.passwordMatchValidator });
@@ -49,16 +50,46 @@ export class Registration {
                         this.form.reset();
                         this.isSubmitted = false;
                         this.toastr.success('New user created!', 'Registration succesful');
-                    } else 
-                        console.log('response error:', res);
+                    }
                 },
-                error: err => console.log('error', err)
+                error: err => {
+                    if (err.error.errors){
+                        err.error.errors.forEach((x:any) => {
+                            switch(x.code){
+                                case "DuplicateUserName":
+                                    break;
+                                case "DuplicateEmail":
+                                    this.toastr.error('Email already taken.', 'Registration failed');
+                                    break;
+                                default:
+                                    this.toastr.error('Contact the developer', 'Registration failed');
+                                    console.log(x);
+                            }
+                        })
+                    } else
+                        console.log('error:', err);
+                }
             });
     }
 
     hasDisplayableError(controlName: string): Boolean {
         const control = this.form.get(controlName);
         return Boolean(control?.invalid) &&
-            (this.isSubmitted || Boolean(control?.touched))
+            (this.isSubmitted || Boolean(control?.touched) || Boolean(control?.dirty))
+    }
+}
+
+export function uppercaseCharacterValidator(): ValidatorFn {
+    return (control:AbstractControl) : ValidationErrors | null => {
+
+        const value = control.value;
+
+        if (!value) {
+            return null;
+        }
+
+        const hasUpperCase = /[A-Z]+/.test(value);
+
+        return !hasUpperCase ? {uppercaseCharacter:true}: null;
     }
 }
