@@ -3,15 +3,16 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Va
 import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
 import { AuchService } from '../../shared/services/auch.service';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-registration',
-    imports: [ReactiveFormsModule, FirstKeyPipe],
+    imports: [ReactiveFormsModule, FirstKeyPipe, RouterLink],
     templateUrl: './registration.component.html',
     styles: ``,
 })
 export class RegistrationComponent {
-    public formBuilder = inject(FormBuilder);
+    formBuilder = inject(FormBuilder);
     private service = inject(AuchService);
     toastr = inject(ToastrService)
     isSubmitted: boolean = false;
