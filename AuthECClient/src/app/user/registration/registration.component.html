@@ -27,17 +27,19 @@
   </div>
   <div class="mb-3">
     <input class="form-control bg-body-secondary" 
-    placeholder="Password" formControlName="password">
+    placeholder="Password" formControlName="password" type="password">
     @if (hasDisplayableError('password')) {
       <div class="error-feedback">
-        @if (form.controls.password.hasError('required')) {
-          <div>Please enter your password.</div>
-        }
-        @if (form.controls.password.hasError('minlength')) {
-          <div>At least 6 characters required.</div>
-        }
-        @if (form.controls.password.hasError('pattern')) {
-          <div>One or more specific character(s).</div>
+        @switch (form.controls.password.errors | firstKey) {
+          @case ('required') {
+            <div>Please enter your password.</div>
+          }
+          @case ('minlength') {
+            <div>At least 6 characters required.</div>
+          }
+          @case ('pattern') {
+            <div>One or more specific character(s).</div>
+          }
         }
       </div>
     }

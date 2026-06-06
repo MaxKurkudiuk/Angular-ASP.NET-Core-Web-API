@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
 
 @Component({
     selector: 'app-registration',
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, FirstKeyPipe],
     templateUrl: './registration.component.html',
     styles: ``,
 })
