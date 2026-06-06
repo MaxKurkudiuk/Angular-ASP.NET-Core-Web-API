@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
     templateUrl: './registration.component.html',
     styles: ``,
 })
-export class Registration {
+export class RegistrationComponent {
     public formBuilder = inject(FormBuilder);
     private service = inject(AuchService);
     toastr = inject(ToastrService)
