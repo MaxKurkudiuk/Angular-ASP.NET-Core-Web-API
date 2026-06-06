@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
 import { AuchService } from '../../shared/services/auch.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-registration',
@@ -12,6 +13,7 @@ import { AuchService } from '../../shared/services/auch.service';
 export class Registration {
     public formBuilder = inject(FormBuilder);
     private service = inject(AuchService);
+    toastr = inject(ToastrService)
     isSubmitted: boolean = false;
 
     // custom validation
@@ -42,8 +44,13 @@ export class Registration {
         if (this.form.valid)
             this.service.createUser(this.form.value)
             .subscribe({
-                next: res => {
-                    console.log(res);
+                next: (res:any) => {
+                    if(res.succeeded){
+                        this.form.reset();
+                        this.isSubmitted = false;
+                        this.toastr.success('New user created!', 'Registration succesful');
+                    } else 
+                        console.log('response error:', res);
                 },
                 error: err => console.log('error', err)
             });
