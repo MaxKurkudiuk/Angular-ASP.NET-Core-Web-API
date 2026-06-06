@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
+import { AuchService } from '../../shared/services/auch.service';
 
 @Component({
     selector: 'app-registration',
@@ -9,7 +10,8 @@ import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
     styles: ``,
 })
 export class Registration {
-    formBuilder = inject(FormBuilder);
+    public formBuilder = inject(FormBuilder);
+    private service = inject(AuchService);
     isSubmitted: boolean = false;
 
     // custom validation
@@ -37,7 +39,14 @@ export class Registration {
 
     onSubmit() {
         this.isSubmitted = true;
-        console.log(this.form.value);
+        if (this.form.valid)
+            this.service.createUser(this.form.value)
+            .subscribe({
+                next: res => {
+                    console.log(res);
+                },
+                error: err => console.log('error', err)
+            });
     }
 
     hasDisplayableError(controlName: string): Boolean {

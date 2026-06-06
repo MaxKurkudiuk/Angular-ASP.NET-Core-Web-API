@@ -35,9 +35,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    // 3. Map the visual UI page (e.g., /scalar/v1)
+    // Map the visual UI page (e.g., /scalar/v1)
     app.MapScalarApiReference();
 }
+
+#region Config CORS
+app.UseCors(options =>
+    options.WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+#endregion
 
 app.UseAuthorization();
 
