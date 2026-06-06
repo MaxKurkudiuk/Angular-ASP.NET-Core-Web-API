@@ -2,9 +2,11 @@ src
     app
         user
             user.component.ts|.html
-            login (folder)
-            registration (folder)
-    
+            login (cmp. folder)
+            registration (cmp. folder)
+
+        dashboard (cmp. foledr)
+        
     shared
         pipes
             first-key.pipe.ts
