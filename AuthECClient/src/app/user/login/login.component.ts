@@ -10,9 +10,21 @@ import { RouterLink } from "@angular/router";
 })
 export class LoginComponent {
     formBuilder = inject(FormBuilder);
+    isSubmitted: boolean = false;
 
     form = this.formBuilder.group({
         email: ['', Validators.required],
         password: ['', Validators.required]
     });
+
+    onSubmit(){
+        this.isSubmitted = true;
+        console.log(this.form.value);
+    }
+
+    hasDisplayableError(controlName: string): Boolean {
+        const control = this.form.get(controlName);
+        return Boolean(control?.invalid) &&
+            (this.isSubmitted || Boolean(control?.touched) || Boolean(control?.dirty))
+    }
 }
