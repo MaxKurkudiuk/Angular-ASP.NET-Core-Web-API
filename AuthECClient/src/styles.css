@@ -10,8 +10,7 @@ body {
     margin-top:0.1rem !important;
 }
 
-/* Adjusting the decay time according to your original guideline */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 1s;
+::view-transition-old(login-card),
+::view-transition-new(login-card) {
+  animation-duration: 0.5s;
 }

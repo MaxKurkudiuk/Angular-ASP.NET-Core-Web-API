@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { ChildrenOutletContexts, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -7,10 +7,4 @@ import { ChildrenOutletContexts, RouterOutlet } from '@angular/router';
   templateUrl: './user.component.html',
   styles: ``
 })
-export class UserComponent {
-    private context = inject(ChildrenOutletContexts);
-
-    getRouteUrl(){
-        return this.context.getContext('primary')?.route?.url;
-    }
-}
+export class UserComponent {}
