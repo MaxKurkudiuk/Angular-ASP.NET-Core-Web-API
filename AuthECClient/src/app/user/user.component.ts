@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
-import { RegistrationComponent } from "./registration/registration.component";
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ChildrenOutletContexts, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-user',
-  imports: [RegistrationComponent, RouterOutlet],
+  imports: [RouterOutlet],
   templateUrl: './user.component.html',
-  styles: ``,
+  styles: ``
 })
-export class UserComponent {}
+export class UserComponent {
+    private context = inject(ChildrenOutletContexts);
+
+    getRouteUrl(){
+        return this.context.getContext('primary')?.route?.url;
+    }
+}

@@ -9,3 +9,9 @@ body {
     margin:0.3rem !important;
     margin-top:0.1rem !important;
 }
+
+/* Adjusting the decay time according to your original guideline */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1s;
+}

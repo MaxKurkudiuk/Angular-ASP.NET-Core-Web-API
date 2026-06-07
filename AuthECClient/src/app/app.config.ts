@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions  } from '@angular/router';
 import { provideToastr } from 'ngx-toastr';
 
 import { routes } from './app.routes';
@@ -10,6 +10,8 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(),
-    provideToastr({positionClass: 'toast-top-center'})
+    provideToastr({positionClass: 'toast-top-center'}),
+    // Enabling built-in CSS transitions for routes
+    provideRouter(routes, withViewTransitions())
   ]
 };
