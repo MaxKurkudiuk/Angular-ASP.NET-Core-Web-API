@@ -4,7 +4,7 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class AuchService {
+export class AuthService {
     private http = inject(HttpClient);
     baseUrl = 'http://localhost:5292/api';
 

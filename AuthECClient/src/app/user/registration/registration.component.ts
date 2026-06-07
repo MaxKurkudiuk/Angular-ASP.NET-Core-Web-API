@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FirstKeyPipe } from '../../shared/pipes/first-key.pipe';
-import { AuchService } from '../../shared/services/auch.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
 
@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 })
 export class RegistrationComponent {
     formBuilder = inject(FormBuilder);
-    private service = inject(AuchService);
+    private service = inject(AuthService);
     toastr = inject(ToastrService)
     isSubmitted: boolean = false;
 
