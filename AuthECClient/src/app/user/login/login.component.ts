@@ -1,15 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from '../../shared/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './login.component.html',
-  styles: ``,
+    selector: 'app-login',
+    imports: [ReactiveFormsModule, RouterLink],
+    templateUrl: './login.component.html',
+    styles: ``,
 })
 export class LoginComponent {
     formBuilder = inject(FormBuilder);
+    private auchService = inject(AuthService);
+    private router = inject(Router);
+    private toastr = inject(ToastrService);
     isSubmitted: boolean = false;
 
     form = this.formBuilder.group({
@@ -17,9 +22,22 @@ export class LoginComponent {
         password: ['', Validators.required]
     });
 
-    onSubmit(){
+    onSubmit() {
         this.isSubmitted = true;
-        console.log(this.form.value);
+        if (this.form.valid) {
+            this.auchService.signin(this.form.value).subscribe({
+                next: (res: any) => {
+                    localStorage.setItem('token', res.token);
+                    this.router.navigateByUrl('/dashboard');
+                },
+                error:err => {
+                    if (err.status == 400)
+                        this.toastr.error('Incorrect email or password.', 'Login failed');
+                    else
+                        console.log('error during login:\n', err);
+                }
+            })
+        }
     }
 
     hasDisplayableError(controlName: string): Boolean {
