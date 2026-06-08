@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { TOKEN_KEY } from '../../shared/constants';
 
 @Component({
     selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent {
         if (this.form.valid) {
             this.auchService.signin(this.form.value).subscribe({
                 next: (res: any) => {
-                    localStorage.setItem('token', res.token);
+                    localStorage.setItem(TOKEN_KEY, res.token);
                     this.router.navigateByUrl('/dashboard');
                 },
                 error:err => {

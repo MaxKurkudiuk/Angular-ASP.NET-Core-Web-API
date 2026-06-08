@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { TOKEN_KEY } from '../shared/constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ export class DashboardComponent {
     private router = inject(Router);
 
     onLogout(){
-        localStorage.removeItem('token');
+        localStorage.removeItem(TOKEN_KEY);
         this.router.navigateByUrl('/signin');
     }
 }
