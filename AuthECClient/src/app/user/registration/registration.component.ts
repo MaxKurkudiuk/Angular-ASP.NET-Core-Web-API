@@ -37,6 +37,7 @@ export class RegistrationComponent {
             Validators.required,
             Validators.minLength(6),
             uppercaseCharacterValidator(),
+            lowercaseCharacterValidator(),
             Validators.pattern(/(?=.*[^a-zA-Z0-9 ])/)]],
         confirmPassword: ['']
     }, { validators: this.passwordMatchValidator });
@@ -92,5 +93,20 @@ export function uppercaseCharacterValidator(): ValidatorFn {
         const hasUpperCase = /[A-Z]+/.test(value);
 
         return !hasUpperCase ? {uppercaseCharacter:true}: null;
+    }
+}
+
+export function lowercaseCharacterValidator(): ValidatorFn {
+    return (control:AbstractControl) : ValidationErrors | null => {
+
+        const value = control.value;
+
+        if (!value) {
+            return null;
+        }
+
+        const hasLowerCase = /[a-z]+/.test(value);
+
+        return !hasLowerCase ? {lowercaseCharacter:true}: null;
     }
 }
