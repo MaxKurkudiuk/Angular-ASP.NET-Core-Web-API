@@ -8,6 +8,7 @@ src
         dashboard (cmp. foledr)
         
     shared
+        auth.guard.ts
         pipes
             first-key.pipe.ts
         services

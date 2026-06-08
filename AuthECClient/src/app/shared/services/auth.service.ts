@@ -15,4 +15,8 @@ export class AuthService {
     signin(formData:any){
         return this.http.post(this.baseUrl + '/signin', formData);
     }
+
+    isLoggedIn(){
+        return localStorage.getItem("token") != null ? true : false;
+    }
 }
