@@ -21,6 +21,7 @@ app.ConfigureOpenApiExplorer()
 app.MapControllers();
 app.MapGroup("/api")
    .MapIdentityApi<AppUser>();
-app.MapIdentityUserEndpoints(builder.Configuration, app.Environment);
+app.MapGroup("/api")
+   .MapIdentityUserEndpoints();
 
 app.Run();
