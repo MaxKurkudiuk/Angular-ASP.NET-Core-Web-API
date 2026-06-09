@@ -1,4 +1,5 @@
 ﻿using AuthECAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ public static class IdentityUserEndpoints
         return app;
     }
 
+    [AllowAnonymous]
     private static async Task<IResult> CreateUser(
         UserManager<AppUser> userManager,
         [FromBody] UserRegiastrationModel userRegiastrationModel)
@@ -37,6 +39,7 @@ public static class IdentityUserEndpoints
         return Results.BadRequest(result);
     }
 
+    [AllowAnonymous]
     private static async Task<IResult> SignIn(
         UserManager<AppUser> userManager,
         [FromBody] LoginModel loginModel,
