@@ -67,4 +67,16 @@ public static class IdentityExtensions
         app.UseAuthorization();
         return app;
     }
+
+    public static WebApplication AddSeedData(this WebApplication app)
+    {
+        if (app.Environment.IsDevelopment())
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                SeedData.Initialize(scope.ServiceProvider).Wait();
+            }
+        }
+        return app;
+    }
 }

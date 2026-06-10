@@ -24,5 +24,6 @@ app.MapGroup("/api")
 app.MapGroup("/api")
    .MapIdentityUserEndpoints()
    .MapAccountEndpoints();
+app.AddSeedData();      // add test data
 
 app.Run();
