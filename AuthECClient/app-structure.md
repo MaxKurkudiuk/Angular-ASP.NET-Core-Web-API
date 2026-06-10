@@ -12,6 +12,7 @@ src
       
   shared
     auth.guard.ts
+    auth.interceptor.ts
     constants.ts
     pipes
       first-key.pipe.ts
