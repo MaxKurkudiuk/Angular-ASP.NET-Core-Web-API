@@ -7,25 +7,29 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-    private http = inject(HttpClient);
+  private http = inject(HttpClient);
 
-    createUser(formData:any){
-        return this.http.post(environment.apiBaseUrl + '/signup', formData);
-    }
+  createUser(formData: any) {
+    return this.http.post(environment.apiBaseUrl + '/signup', formData);
+  }
 
-    signin(formData:any){
-        return this.http.post(environment.apiBaseUrl + '/signin', formData);
-    }
+  signin(formData: any) {
+    return this.http.post(environment.apiBaseUrl + '/signin', formData);
+  }
 
-    isLoggedIn(){
-        return localStorage.getItem(TOKEN_KEY) != null ? true : false;
-    }
+  isLoggedIn() {
+    return this.getToken() != null ? true : false;
+  }
 
-    saveToken(token:string){
-        localStorage.setItem(TOKEN_KEY, token);
-    }
+  getToken() {
+    return localStorage.getItem(TOKEN_KEY);
+  }
 
-    deleteToken(){
-        localStorage.removeItem(TOKEN_KEY);
-    }
+  saveToken(token: string) {
+    localStorage.setItem(TOKEN_KEY, token);
+  }
+
+  deleteToken() {
+    localStorage.removeItem(TOKEN_KEY);
+  }
 }
