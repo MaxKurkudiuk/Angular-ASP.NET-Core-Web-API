@@ -13,6 +13,7 @@ public static class IdentityExtensions
     {
         // Service from Identity Core
         services.AddIdentityApiEndpoints<AppUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
         return services;
     }

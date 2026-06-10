@@ -33,6 +33,7 @@ public static class IdentityUserEndpoints
         var result = await userManager.CreateAsync(
             user,
             userRegiastrationModel.Password);
+        await userManager.AddToRoleAsync(user, userRegiastrationModel.Role);
 
         if (result.Succeeded)
             return Results.Ok(result);
