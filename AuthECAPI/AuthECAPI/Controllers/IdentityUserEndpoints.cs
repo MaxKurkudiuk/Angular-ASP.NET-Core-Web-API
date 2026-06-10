@@ -28,7 +28,11 @@ public static class IdentityUserEndpoints
         {
             UserName = userRegiastrationModel.Email,
             Email = userRegiastrationModel.Email,
-            FullName = userRegiastrationModel.FullName
+            FullName = userRegiastrationModel.FullName,
+            Gender = userRegiastrationModel.Gender,
+            // If today is 2024-01-15 and age is 25, result would be approximately 1999-01-15
+            DOB = DateOnly.FromDateTime(DateTime.Now.AddYears(-userRegiastrationModel.Age)),
+            LibraryID = userRegiastrationModel.LibraryID
         };
         var result = await userManager.CreateAsync(
             user,
