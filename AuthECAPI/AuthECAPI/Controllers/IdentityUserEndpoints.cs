@@ -54,15 +54,22 @@ public static class IdentityUserEndpoints
         var user = await userManager.FindByEmailAsync(loginModel.Email);
         if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
         {
+            var roles = await userManager.GetRolesAsync(user);
             var signInKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(
                     appSettingsOpt.Value.JWTSeecret));
+            var claims = new ClaimsIdentity(new Claim[]
+            {
+                new Claim("UserID", user.Id.ToString()),
+                new Claim("Gender", user.Gender.ToString()),
+                new Claim("Age", (DateTime.Now.Year - user.DOB.Year).ToString()),
+                new Claim(ClaimTypes.Role, roles.First())
+            });
+            if (user.LibraryID != null)
+                claims.AddClaim(new Claim("LibraryID", user.LibraryID.ToString()!));
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim("UserID", user.Id.ToString())
-                }),
+                Subject = claims,
                 Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256Signature)
             };
