@@ -1,6 +1,6 @@
 using AuthECAPI.Controllers;
-using AuthECAPI.Extensions;
-using AuthECAPI.Models;
+using AuthECAPI.Shared.Extensions;
+using AuthECAPI.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

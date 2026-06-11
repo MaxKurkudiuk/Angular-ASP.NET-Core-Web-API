@@ -1,4 +1,4 @@
-﻿namespace AuthECAPI.Models;
+﻿namespace AuthECAPI.Shared.Models;
 
 public class AppSettings
 {

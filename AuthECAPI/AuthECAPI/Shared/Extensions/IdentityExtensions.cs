@@ -1,11 +1,11 @@
-﻿using AuthECAPI.Models;
+﻿using AuthECAPI.Shared.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace AuthECAPI.Extensions;
+namespace AuthECAPI.Shared.Extensions;
 
 public static class IdentityExtensions
 {

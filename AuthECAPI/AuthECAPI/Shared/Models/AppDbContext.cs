@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthECAPI.Models;
+namespace AuthECAPI.Shared.Models;
 
 public class AppDbContext : IdentityDbContext
 {
