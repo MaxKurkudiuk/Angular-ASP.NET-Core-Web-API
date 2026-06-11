@@ -57,6 +57,8 @@ public static class IdentityExtensions
                 .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                 .RequireAuthenticatedUser()
                 .Build();
+
+            options.AddPolicy("HasLibraryID", policy => policy.RequireClaim("LibraryID"));
         });
         return services;
     }
