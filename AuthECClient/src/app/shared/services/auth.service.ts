@@ -10,6 +10,10 @@ export class AuthService {
   private http = inject(HttpClient);
 
   createUser(formData: any) {
+    // WARNING!
+    // default value for Role, Gender, Age, LibraryID?
+    // instead of registration form, there should be some other
+    // form to update these details of the user
     return this.http.post(environment.apiBaseUrl + '/signup', formData);
   }
 
