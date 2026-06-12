@@ -6,7 +6,7 @@ import { UserService } from '../../../core/services/user.service';
 @Component({
   selector: 'app-dashboard',
   imports: [],
-  templateUrl: './dashboard-component.html',
+  templateUrl: './dashboard.component.html',
   styles: ``,
 })
 export class DashboardComponent implements OnInit {

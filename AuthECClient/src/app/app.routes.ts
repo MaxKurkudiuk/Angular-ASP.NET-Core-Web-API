@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { UserComponent } from './shared/components/user/user.component';
 import { RegistrationComponent } from './shared/components/user/registration/registration.component';
 import { LoginComponent } from './shared/components/user/login/login.component';
-import { DashboardComponent } from './shared/components/dashboard/dashboard-component';
+import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { authGuard, isNotLoggedInGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
