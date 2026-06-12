@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { TOKEN_KEY } from '../constants';
+import { TOKEN_KEY } from '../../shared/constants';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
