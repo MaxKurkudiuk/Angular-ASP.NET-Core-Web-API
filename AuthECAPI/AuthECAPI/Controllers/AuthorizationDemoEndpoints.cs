@@ -10,6 +10,8 @@ public static class AuthorizationDemoEndpoints
         app.MapGet("/AdminOnly", AdminOnly);
         app.MapGet("/AdminOrTeacher", AdminOrTeacher);
         app.MapGet("/LibraryMembersOnly", LibraryMembersOnly);
+        app.MapGet("/ApplyForMaternityLeave", ApplyForMaternityLeave);
+        app.MapGet("/Under10sAndFemale", Under10sAndFemale);
         return app;
     }
 
@@ -29,5 +31,18 @@ public static class AuthorizationDemoEndpoints
     private static string LibraryMembersOnly()
     {
         return "Library Members Only";
+    }
+
+    [Authorize(Policy = "FemalesOnly", Roles = nameof(Roles.Teacher))]
+    private static string ApplyForMaternityLeave()
+    {
+        return "Applied for maternity leave.";
+    }
+
+    [Authorize(Policy = "Under10")]
+    [Authorize(Policy = "FemalesOnly")]
+    private static string Under10sAndFemale()
+    {
+        return "Under 10 and female.";
     }
 }
