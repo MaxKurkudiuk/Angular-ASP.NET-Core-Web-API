@@ -14,6 +14,8 @@ builder.Services.AddOpenApiExplorer()
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+app.UseRouting();
 app.ConfigureOpenApiExplorer()
    .ConfigureCors(builder.Configuration)
    .AddIdentityAuthMiddlewares();
