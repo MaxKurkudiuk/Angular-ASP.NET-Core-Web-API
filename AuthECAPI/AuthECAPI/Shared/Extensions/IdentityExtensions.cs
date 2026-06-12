@@ -59,6 +59,9 @@ public static class IdentityExtensions
                 .Build();
 
             options.AddPolicy("HasLibraryID", policy => policy.RequireClaim("LibraryID"));
+            options.AddPolicy("FemalesOnly", policy => policy.RequireClaim("Gender", "Female"));
+            options.AddPolicy("Under10", policy => policy.RequireAssertion(context =>
+                Int32.Parse(context.User.Claims.First(claim => claim.Type == "Age").Value) < 10));
         });
         return services;
     }

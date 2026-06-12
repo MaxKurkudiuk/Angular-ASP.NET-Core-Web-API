@@ -18,7 +18,7 @@ public static class OpenApiExtensions
         {
             app.MapOpenApi().AllowAnonymous();
             // Map the visual UI page (e.g., /scalar/v1)
-            app.MapScalarApiReference("/scalar").AllowAnonymous();  //4.32.57
+            app.MapScalarApiReference("/scalar").AllowAnonymous();
         } else
         {
             //app.MapOpenApi();
