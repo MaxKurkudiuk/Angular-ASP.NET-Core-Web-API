@@ -15,16 +15,20 @@
         Admin or Teacher
       </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" [appHideIfClaimsNotMet]="claimReq.femaleAndTeacher">
       <a class="nav-link" routerLink="/apply-for-maternity-leave">
         Applied for maternity leave
       </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/library-members-only"></a>
+    <li class="nav-item" [appHideIfClaimsNotMet]="claimReq.hasLibraryId">
+      <a class="nav-link" routerLink="/library-members-only">
+        Library Members Only
+      </a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/under10-and-female"></a>
+    <li class="nav-item" [appHideIfClaimsNotMet]="claimReq.femaleAndBelow10">
+      <a class="nav-link" routerLink="/under10-and-female">
+        Under 10 and female
+      </a>
     </li>
   </ul>
 </nav>

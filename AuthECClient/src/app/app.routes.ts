@@ -39,13 +39,15 @@ export const routes: Routes = [
       },
       {
         path: 'apply-for-maternity-leave', component: ApplyForMaternityLeaveComponent,
-        data: { claimReq: (c: any) => c.policy == 'FemalesOnly' && c.role == 'Teacher' }
+        data: { claimReq: claimReq.femaleAndTeacher }
       },
       {
-        path: 'library-members-only', component: LibraryMembersOnlyComponent
+        path: 'library-members-only', component: LibraryMembersOnlyComponent,
+        data: { claimReq: claimReq.femaleAndBelow10 }
       },
       {
-        path: 'under10-and-female', component: Under10AndFemaleComponent
+        path: 'under10-and-female', component: Under10AndFemaleComponent,
+        data: { claimReq: claimReq.femaleAndBelow10 }
       },
       {
         path: 'forbidden', component: ForbiddenComponent
