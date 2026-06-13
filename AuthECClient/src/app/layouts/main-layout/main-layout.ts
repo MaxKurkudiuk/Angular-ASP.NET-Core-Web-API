@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from "../../../../node_modules/@angular/router/types/_router_module-chunk";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-layaut',
@@ -7,4 +7,4 @@ import { RouterOutlet } from "../../../../node_modules/@angular/router/types/_ro
   templateUrl: './main-layout.html',
   styles: ``,
 })
-export class MainLaoautComponent {}
+export class MainLayoutComponent {}

@@ -9,7 +9,7 @@ import { AdminOrTeacherComponent } from './shared/components/authorizeDemo/admin
 import { ApplyForMaternityLeaveComponent } from './shared/components/authorizeDemo/apply-for-maternity-leave/apply-for-maternity-leave.component';
 import { LibraryMembersOnlyComponent } from './shared/components/authorizeDemo/library-members-only/library-members-only.component';
 import { Under10AndFemaleComponent } from './shared/components/authorizeDemo/under10-and-female/under10-and-female.component';
-import { MainLaoautComponent } from './layouts/main-layout/main-layout';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/signin', pathMatch: 'full' },
@@ -21,31 +21,25 @@ export const routes: Routes = [
         ]
     },
     {
-      path:'', component: MainLaoautComponent,
+      path:'', component: MainLayoutComponent, canActivate: [authGuard],
       children: [
         { 
-            path: 'dashboard', component: DashboardComponent,
-            canActivate: [authGuard]
+            path: 'dashboard', component: DashboardComponent
         },
         { 
-            path: 'admin-only', component: AdminOnlyComponent,
-            canActivate: [authGuard]
+            path: 'admin-only', component: AdminOnlyComponent
         },
         { 
-            path: 'admin-or-teacher', component: AdminOrTeacherComponent,
-            canActivate: [authGuard]
+            path: 'admin-or-teacher', component: AdminOrTeacherComponent
         },
         { 
-            path: 'apply-for-maternity-leave', component: ApplyForMaternityLeaveComponent,
-            canActivate: [authGuard]
+            path: 'apply-for-maternity-leave', component: ApplyForMaternityLeaveComponent
         },
         { 
-            path: 'library-members-only', component: LibraryMembersOnlyComponent,
-            canActivate: [authGuard]
+            path: 'library-members-only', component: LibraryMembersOnlyComponent
         },
         { 
-            path: 'under10-and-female', component: Under10AndFemaleComponent,
-            canActivate: [authGuard]
+            path: 'under10-and-female', component: Under10AndFemaleComponent
         }
       ]
     },
