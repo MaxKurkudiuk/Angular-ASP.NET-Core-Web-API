@@ -27,10 +27,12 @@ export const routes: Routes = [
             path: 'dashboard', component: DashboardComponent
         },
         { 
-            path: 'admin-only', component: AdminOnlyComponent
+            path: 'admin-only', component: AdminOnlyComponent,
+            data: { claimReq: (c:any) => c.role == "Admin" }
         },
         { 
-            path: 'admin-or-teacher', component: AdminOrTeacherComponent
+            path: 'admin-or-teacher', component: AdminOrTeacherComponent,
+            data: { claimReq: (c:any) => c.role == "Admin" || c.role == "Teacher" }
         },
         { 
             path: 'apply-for-maternity-leave', component: ApplyForMaternityLeaveComponent
