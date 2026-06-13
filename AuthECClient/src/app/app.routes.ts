@@ -10,6 +10,7 @@ import { ApplyForMaternityLeaveComponent } from './shared/components/authorizeDe
 import { LibraryMembersOnlyComponent } from './shared/components/authorizeDemo/library-members-only/library-members-only.component';
 import { Under10AndFemaleComponent } from './shared/components/authorizeDemo/under10-and-female/under10-and-female.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout';
+import { ForbiddenComponent } from './shared/components/forbidden/forbidden.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/signin', pathMatch: 'full' },
@@ -42,6 +43,9 @@ export const routes: Routes = [
         },
         { 
             path: 'under10-and-female', component: Under10AndFemaleComponent
+        },
+        { 
+            path: 'forbidden', component: ForbiddenComponent
         }
       ]
     },
