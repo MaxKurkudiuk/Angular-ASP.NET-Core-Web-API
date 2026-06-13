@@ -18,7 +18,7 @@ public static class AccountEndpoints
         ClaimsPrincipal user,
         UserManager<AppUser> userManager)
     {
-        var userId = user.Claims.First(x => x.Type == "UserID").Value;
+        var userId = user.Claims.First(x => x.Type == "userID").Value;
         var userDetails = await userManager.FindByIdAsync(userId);
         return Results.Ok(new
         {
