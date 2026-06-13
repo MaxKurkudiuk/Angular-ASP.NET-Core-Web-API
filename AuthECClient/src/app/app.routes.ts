@@ -11,43 +11,45 @@ import { LibraryMembersOnlyComponent } from './shared/components/authorizeDemo/l
 import { Under10AndFemaleComponent } from './shared/components/authorizeDemo/under10-and-female/under10-and-female.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout';
 import { ForbiddenComponent } from './shared/components/forbidden/forbidden.component';
+import { claimReq } from './shared/utils/claimReq-utils';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/signin', pathMatch: 'full' },
-    {
-        path: '', component: UserComponent,
-        children: [
-            { path: 'signup', component: RegistrationComponent, canActivate: [isNotLoggedInGuard] },
-            { path: 'signin', component: LoginComponent, canActivate: [isNotLoggedInGuard] }
-        ]
-    },
-    {
-      path:'', component: MainLayoutComponent, 
-      canActivateChild: [authGuard],
-      children: [
-        { 
-            path: 'dashboard', component: DashboardComponent
-        },
-        { 
-            path: 'admin-only', component: AdminOnlyComponent,
-            data: { claimReq: (c:any) => c.role == "Admin" }
-        },
-        { 
-            path: 'admin-or-teacher', component: AdminOrTeacherComponent,
-            data: { claimReq: (c:any) => c.role == "Admin" || c.role == "Teacher" }
-        },
-        { 
-            path: 'apply-for-maternity-leave', component: ApplyForMaternityLeaveComponent
-        },
-        { 
-            path: 'library-members-only', component: LibraryMembersOnlyComponent
-        },
-        { 
-            path: 'under10-and-female', component: Under10AndFemaleComponent
-        },
-        { 
-            path: 'forbidden', component: ForbiddenComponent
-        }
-      ]
-    },
+  { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  {
+    path: '', component: UserComponent,
+    children: [
+      { path: 'signup', component: RegistrationComponent, canActivate: [isNotLoggedInGuard] },
+      { path: 'signin', component: LoginComponent, canActivate: [isNotLoggedInGuard] }
+    ]
+  },
+  {
+    path: '', component: MainLayoutComponent,
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: 'dashboard', component: DashboardComponent
+      },
+      {
+        path: 'admin-only', component: AdminOnlyComponent,
+        data: { claimReq: claimReq.adminOnly }
+      },
+      {
+        path: 'admin-or-teacher', component: AdminOrTeacherComponent,
+        data: { claimReq: claimReq.adminOrTeacher }
+      },
+      {
+        path: 'apply-for-maternity-leave', component: ApplyForMaternityLeaveComponent,
+        data: { claimReq: (c: any) => c.policy == 'FemalesOnly' && c.role == 'Teacher' }
+      },
+      {
+        path: 'library-members-only', component: LibraryMembersOnlyComponent
+      },
+      {
+        path: 'under10-and-female', component: Under10AndFemaleComponent
+      },
+      {
+        path: 'forbidden', component: ForbiddenComponent
+      }
+    ]
+  },
 ];
