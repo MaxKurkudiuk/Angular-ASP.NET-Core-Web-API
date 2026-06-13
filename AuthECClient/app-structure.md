@@ -9,6 +9,8 @@ src
     environments
       environment.ts
       environment.development.ts
+  layouts
+    main-lauout
       
   shared
     auth.guard.ts
