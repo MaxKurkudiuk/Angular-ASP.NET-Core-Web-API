@@ -1,6 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 
 @Component({
@@ -10,8 +8,6 @@ import { UserService } from '../../../core/services/user.service';
   styles: ``,
 })
 export class DashboardComponent implements OnInit {
-  private router = inject(Router);
-  private authService = inject(AuthService);
   private userService = inject(UserService);
   fullName = signal<string>('');
 
@@ -22,10 +18,5 @@ export class DashboardComponent implements OnInit {
       },
       error: (err: any) => console.log('error while retreaving user profile: \n', err)
     });
-  }
-
-  onLogout() {
-    this.authService.deleteToken();
-    this.router.navigateByUrl('/signin');
   }
 }

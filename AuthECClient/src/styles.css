@@ -1,16 +1,27 @@
 body {
-    font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* form validation */
-.error-feedback{
-    font-size:0.9rem;
-    color:crimson;
-    margin:0.3rem !important;
-    margin-top:0.1rem !important;
+.error-feedback {
+  font-size: 0.9rem;
+  color: crimson;
+  margin: 0.3rem !important;
+  margin-top: 0.1rem !important;
 }
 
 ::view-transition-old(login-card),
 ::view-transition-new(login-card) {
   animation-duration: 0.5s;
+}
+
+#main {
+  margin-left: 240px;
+}
+
+#sidebar {
+  width: 240px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
