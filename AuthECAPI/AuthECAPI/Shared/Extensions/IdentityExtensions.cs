@@ -48,7 +48,9 @@ public static class IdentityExtensions
                     Encoding.UTF8.GetBytes(
                         config["AppSettings:JWTSeecret"]!)),
                 ValidateIssuer = false,
-                ValidateAudience = false
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
         });
         services.AddAuthorization(options =>
