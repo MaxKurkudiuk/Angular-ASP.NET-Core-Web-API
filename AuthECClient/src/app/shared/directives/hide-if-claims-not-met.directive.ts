@@ -12,7 +12,7 @@ export class HideIfClaimsNotMetDirective implements OnInit {
 
   ngOnInit(): void {
     const claims = this.authService.getClaims();
-    console.log("claims:", claims);
+    // console.log("claims:", claims);
     if (!this.claimReq(claims))
       this.elementRef.nativeElement.style.display = "none";
   }
