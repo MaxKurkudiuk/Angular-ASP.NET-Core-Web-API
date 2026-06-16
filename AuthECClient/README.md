@@ -1,59 +1,127 @@
 # AuthECClient
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.13.
+Frontend client for an **Authentication & Authorization** system built with **Angular 21**. Demonstrates JWT-based auth with role/claim-based route guarding, conditional UI rendering, and HTTP interceptors.
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- **Angular 21** (standalone components, `bootstrapApplication`)
+- **Bootstrap 5.3** — layout & styling (loaded via CDN)
+- **ngx-toastr** — toast notifications
+- **Reactive Forms** — login & registration forms with custom validators
+- **HttpClient** with functional interceptors
+- **View Transitions** — built-in CSS route transitions
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) >= 18
+- npm (comes with Node.js)
+- The backend ASP.NET Core Web API running at `http://localhost:5292/api`
+
+## Setup
+
+```bash
+npm install
+```
+
+## Development Server
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/`. The app auto-reloads on file changes.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Build
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts are output to the `dist/` directory. Production builds optimize for performance.
 
-## Running unit tests
+## Project Structure
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+```
+src/
+├── app/
+│   ├── app.component.ts|html      # Root component (<router-outlet/>)
+│   ├── app.config.ts              # Providers: router, HttpClient, Toastr
+│   ├── app.routes.ts              # All routes with guards & claim requirements
+│   ├── core/
+│   │   ├── guards/
+│   │   │   └── auth-guard.ts      # authGuard & isNotLoggedInGuard
+│   │   ├── interceptors/
+│   │   │   └── auth.interceptor.ts# Attaches JWT; handles 401/403
+│   │   ├── models/                # (empty — no TypeScript models yet)
+│   │   └── services/
+│   │       ├── auth.service.ts    # signin, createUser, token management
+│   │       └── user.service.ts    # getUserProfile API call
+│   ├── layouts/
+│   │   └── main-layout/           # Post-login sidebar layout + logout
+│   └── shared/
+│       ├── components/
+│       │   ├── user/              # Login & Registration shell + card UI
+│       │   │   ├── login/         # Sign-in form
+│       │   │   └── registration/  # Sign-up form with password validators
+│       │   ├── dashboard/         # Welcome page with user name
+│       │   ├── forbidden/         # 403 access denied page
+│       │   └── authorizeDemo/     # Claim-based demo pages:
+│       │       ├── admin-only/
+│       │       ├── admin-or-teacher/
+│       │       ├── apply-for-maternity-leave/
+│       │       ├── library-members-only/
+│       │       └── under10-and-female/
+│       ├── constants/
+│       │   └── constants.ts       # localStorage token key
+│       ├── directives/
+│       │   └── hide-if-claims-not-met.directive.ts  # Conditional DOM visibility
+│       ├── pipes/
+│       │   └── first-key.pipe.ts  # Extracts first key from errors object
+│       └── utils/
+│           └── claimReq-utils.ts  # Claim requirement functions
+├── environments/
+│   ├── environment.ts
+│   └── environment.development.ts
+└── styles.css                     # Global styles + sidebar layout
+```
+
+## Features
+
+### Authentication
+- User registration with full name, email, password (with uppercase, lowercase, special char, and min-length validation)
+- Login with email/password
+- JWT stored in `localStorage`
+- Auth guard redirects unauthenticated users to `/signin`
+- `isNotLoggedInGuard` redirects authenticated users away from login/register
+
+### Authorization
+- **Claim-based route guarding** — each route can specify a `claimReq` function that evaluates JWT claims
+- **Conditional UI** — `HideIfClaimsNotMetDirective` hides nav items and buttons based on user claims
+- **HTTP interceptor** — on 401 (expired/invalid token), clears token and redirects to login; on 403, shows a toast
+
+### Demo Pages
+The app includes demo pages to showcase claim-based authorization:
+
+| Route | Required Claims |
+|---|---|
+| `/admin-only` | `role == "Admin"` |
+| `/admin-or-teacher` | `role == "Admin" \|\| role == "Teacher"` |
+| `/apply-for-maternity-leave` | `gender == "Female" && role == "Teacher"` |
+| `/library-members-only` | Has a `libraryID` claim |
+| `/under10-and-female` | `gender == "Female" && age <= 10` |
+
+## Backend API
+
+The client expects an ASP.NET Core Web API at the configured `apiBaseUrl`. Required endpoints:
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/signup` | Create a new user |
+| POST | `/api/signin` | Sign in, returns JWT token |
+| GET | `/api/userprofile` | Get current user profile (requires auth) |
+
+## Running Tests
 
 ```bash
 ng test
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
