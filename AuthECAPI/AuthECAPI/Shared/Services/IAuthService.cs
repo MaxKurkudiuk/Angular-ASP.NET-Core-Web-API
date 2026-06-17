@@ -5,6 +5,6 @@ namespace AuthECAPI.Shared.Services;
 
 public interface IAuthService
 {
-    Task<IdentityResult> SignUpAsync(UserRegiastrationModel model);
+    Task<IdentityResult> SignUpAsync(UserRegistrationModel model);
     Task<(string? Token, string? ErrorMessage)> SignInAsync(LoginModel model);
 }

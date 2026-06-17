@@ -1,6 +1,6 @@
 ﻿namespace AuthECAPI.Shared.Models;
 
-public class UserRegiastrationModel
+public class UserRegistrationModel
 {
     public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;

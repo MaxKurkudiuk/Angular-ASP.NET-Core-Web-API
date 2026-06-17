@@ -8,7 +8,7 @@ public class AuthService(UserManager<AppUser> userManager, ITokenService tokenSe
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly ITokenService _tokenService = tokenService;
 
-    public async Task<IdentityResult> SignUpAsync(UserRegiastrationModel model)
+    public async Task<IdentityResult> SignUpAsync(UserRegistrationModel model)
     {
         var user = new AppUser
         {

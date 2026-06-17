@@ -17,7 +17,7 @@ public static class IdentityUserEndpoints
     [AllowAnonymous]
     private static async Task<IResult> CreateUser(
         IAuthService authService,
-        [FromBody] UserRegiastrationModel userRegiastrationModel)
+        [FromBody] UserRegistrationModel userRegiastrationModel)
     {
         var result = await authService.SignUpAsync(userRegiastrationModel);
         return result.Succeeded
