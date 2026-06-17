@@ -2,16 +2,24 @@ using AuthECAPI.Controllers;
 using AuthECAPI.Shared.Extensions;
 using AuthECAPI.Shared.Models;
 using AuthECAPI.Shared.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApiExplorer()
-                .InjectDbContext(builder.Configuration)
                 .AddAppConfig(builder.Configuration)
                 .AddIdentityHandlersAndStores()
                 .ConfigureIdentityOptions()
                 .AddIdentityAuth(builder.Configuration);
+
+if (builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseInMemoryDatabase("TestDb"));
+} else {
+    builder.Services.InjectDbContext(builder.Configuration);
+}
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();

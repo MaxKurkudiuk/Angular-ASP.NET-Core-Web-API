@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 namespace AuthECAPI.Shared.Extensions;
@@ -61,9 +62,12 @@ public static class IdentityExtensions
                 .Build();
 
             options.AddPolicy("HasLibraryID", policy => policy.RequireClaim("libraryID"));
-            options.AddPolicy("FemalesOnly", policy => policy.RequireClaim("gender", "Female"));
+            options.AddPolicy("FemalesOnly", policy => policy.RequireClaim(ClaimTypes.Gender, "Female"));
             options.AddPolicy("Under10", policy => policy.RequireAssertion(context =>
-                Int32.Parse(context.User.Claims.First(claim => claim.Type == "age").Value) < 10));
+            {
+                var ageClaim = context.User.Claims.FirstOrDefault(claim => claim.Type == "age");
+                return ageClaim is not null && int.TryParse(ageClaim.Value, out var age) && age < 10;
+            }));
         });
         return services;
     }
