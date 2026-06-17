@@ -229,7 +229,7 @@ namespace AuthECAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AuthECAPI.Models.AppUser", b =>
+            modelBuilder.Entity("AuthECAPI.Shared.Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
