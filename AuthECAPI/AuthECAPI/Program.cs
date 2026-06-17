@@ -1,9 +1,9 @@
+using AuthECAPI.Application.Services;
 using AuthECAPI.Controllers;
 using AuthECAPI.Core.Entities;
 using AuthECAPI.Core.Interfaces;
 using AuthECAPI.Shared.Extensions;
 using AuthECAPI.Shared.Models;
-using AuthECAPI.Shared.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

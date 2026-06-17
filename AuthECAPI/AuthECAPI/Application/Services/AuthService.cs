@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using AuthECAPI.Shared.Models;
 using AuthECAPI.Core.Interfaces;
+using AuthECAPI.Core.Entities;
 
-namespace AuthECAPI.Shared.Services;
+namespace AuthECAPI.Application.Services;
 
 public class AuthService(UserManager<AppUser> userManager, ITokenService tokenService) : IAuthService
 {

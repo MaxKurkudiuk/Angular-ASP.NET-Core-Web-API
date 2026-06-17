@@ -1,13 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AuthECAPI.Application.Models;
 using AuthECAPI.Core.Entities;
 using AuthECAPI.Core.Interfaces;
-using AuthECAPI.Shared.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AuthECAPI.Shared.Services;
+namespace AuthECAPI.Application.Services;
 
 public class TokenService : ITokenService
 {
