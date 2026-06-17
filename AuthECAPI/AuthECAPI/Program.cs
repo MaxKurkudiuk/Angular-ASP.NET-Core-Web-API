@@ -1,6 +1,7 @@
 using AuthECAPI.Controllers;
 using AuthECAPI.Shared.Extensions;
 using AuthECAPI.Shared.Models;
+using AuthECAPI.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddOpenApiExplorer()
                 .AddIdentityHandlersAndStores()
                 .ConfigureIdentityOptions()
                 .AddIdentityAuth(builder.Configuration);
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
