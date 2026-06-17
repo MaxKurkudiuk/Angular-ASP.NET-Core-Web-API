@@ -1,4 +1,4 @@
-﻿namespace AuthECAPI.Shared.Models;
+﻿namespace AuthECAPI.Core.Enums;
 
 public enum Roles
 {

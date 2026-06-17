@@ -1,6 +1,6 @@
-using AuthECAPI.Shared.Models;
+using AuthECAPI.Core.Entities;
 
-namespace AuthECAPI.Shared.Services;
+namespace AuthECAPI.Core.Interfaces;
 
 public interface ITokenService
 {

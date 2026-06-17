@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AuthECAPI.Core.Entities;
+using AuthECAPI.Core.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace AuthECAPI.Shared.Models;
 

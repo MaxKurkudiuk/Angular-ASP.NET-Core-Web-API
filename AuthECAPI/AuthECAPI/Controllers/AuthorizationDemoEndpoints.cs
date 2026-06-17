@@ -1,4 +1,4 @@
-﻿using AuthECAPI.Shared.Models;
+﻿using AuthECAPI.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AuthECAPI.Controllers;

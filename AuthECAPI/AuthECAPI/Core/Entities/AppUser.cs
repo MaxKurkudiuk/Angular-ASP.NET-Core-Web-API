@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AuthECAPI.Shared.Models;
+namespace AuthECAPI.Core.Entities;
 
 public class AppUser : IdentityUser
 {

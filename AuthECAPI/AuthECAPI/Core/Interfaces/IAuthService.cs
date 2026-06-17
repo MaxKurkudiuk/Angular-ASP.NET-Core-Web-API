@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using AuthECAPI.Shared.Models;
 
-namespace AuthECAPI.Shared.Services;
+namespace AuthECAPI.Core.Interfaces;
 
 public interface IAuthService
 {

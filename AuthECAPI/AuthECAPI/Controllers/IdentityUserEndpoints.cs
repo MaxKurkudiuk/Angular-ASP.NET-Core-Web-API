@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using AuthECAPI.Shared.Models;
-using AuthECAPI.Shared.Services;
+using AuthECAPI.Core.Interfaces;
 
 namespace AuthECAPI.Controllers;
 

@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AuthECAPI.Core.Entities;
+using AuthECAPI.Core.Interfaces;
 using AuthECAPI.Shared.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

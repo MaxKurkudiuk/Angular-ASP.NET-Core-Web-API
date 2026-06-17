@@ -1,4 +1,6 @@
 using System.Security.Cryptography;
+using AuthECAPI.Core.Entities;
+using AuthECAPI.Core.Interfaces;
 using AuthECAPI.Shared.Models;
 using AuthECAPI.Shared.Services;
 using Microsoft.AspNetCore.Identity;

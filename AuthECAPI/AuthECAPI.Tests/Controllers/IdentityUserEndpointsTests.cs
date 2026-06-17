@@ -1,6 +1,6 @@
 using AuthECAPI.Controllers;
+using AuthECAPI.Core.Interfaces;
 using AuthECAPI.Shared.Models;
-using AuthECAPI.Shared.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;

@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using AuthECAPI.Core.Entities;
 using AuthECAPI.Shared.Models;
 using AuthECAPI.Shared.Services;
 using Microsoft.AspNetCore.Hosting;

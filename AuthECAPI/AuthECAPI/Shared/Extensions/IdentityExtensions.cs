@@ -1,4 +1,5 @@
-﻿using AuthECAPI.Shared.Models;
+﻿using AuthECAPI.Core.Entities;
+using AuthECAPI.Shared.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
