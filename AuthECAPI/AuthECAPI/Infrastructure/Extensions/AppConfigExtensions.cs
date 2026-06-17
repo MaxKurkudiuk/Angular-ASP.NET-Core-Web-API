@@ -1,4 +1,4 @@
-﻿using AuthECAPI.Shared.Models;
+﻿using AuthECAPI.Application.Models;
 
 namespace AuthECAPI.Infrastructure.Extensions;
 

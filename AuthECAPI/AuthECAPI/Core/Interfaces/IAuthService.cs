@@ -1,5 +1,5 @@
+using AuthECAPI.Application.Models;
 using Microsoft.AspNetCore.Identity;
-using AuthECAPI.Shared.Models;
 
 namespace AuthECAPI.Core.Interfaces;
 

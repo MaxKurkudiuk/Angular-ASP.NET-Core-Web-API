@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
+using AuthECAPI.Application.Models;
 using AuthECAPI.Application.Services;
 using AuthECAPI.Core.Entities;
 using AuthECAPI.Core.Interfaces;
-using AuthECAPI.Shared.Models;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 
