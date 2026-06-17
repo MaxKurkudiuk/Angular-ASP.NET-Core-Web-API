@@ -8,8 +8,11 @@ public static class AppConfigExtensions
         this WebApplication app,
         IConfiguration config)
     {
+        // 1. Fetch the origins array from appsettings.json
+        var allowedOrigins = config.GetSection("AllowedOrigins").Get<string[]>() ?? [];
+
         app.UseCors(options =>
-            options.WithOrigins("http://localhost:4200")
+            options.WithOrigins(allowedOrigins)
                 .AllowAnyMethod()
                 .AllowAnyHeader());
         return app;
