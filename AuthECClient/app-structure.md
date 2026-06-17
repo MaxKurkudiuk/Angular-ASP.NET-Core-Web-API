@@ -1,23 +1,40 @@
-src
-  app
-    user
-      user.component.ts|.html
-      login (cmp. folder)
-      registration (cmp. folder)
-
-    dashboard (cmp. foledr)
-    environments
-      environment.ts
-      environment.development.ts
-  layouts
-    main-lauout
-      
-  shared
-    auth.guard.ts
-    auth.interceptor.ts
-    constants.ts
-    pipes
-      first-key.pipe.ts
-    services
-      user.service.ts
-      auch.service.ts
+src/
+  app/
+    app.config.ts
+    app.routes.ts
+    core/
+      guards/
+        auth-guard.ts
+      interceptors/
+        auth.interceptor.ts
+      models/
+      services/
+        auth.service.ts
+        user.service.ts
+    layouts/
+      main-layout/
+        main-layout.ts|.html
+    shared/
+      components/
+        authorizeDemo/
+          admin-only/
+          admin-or-teacher/
+          apply-for-maternity-leave/
+          library-members-only/
+          under10-and-female/
+        dashboard/
+        forbidden/
+        user/
+          login/
+          registration/
+      constants/
+        constants.ts
+      directives/
+        hide-if-claims-not-met.directive.ts
+      pipes/
+        first-key.pipe.ts
+      utils/
+        claimReq-utils.ts
+  environments/
+    environment.ts
+    environment.development.ts
