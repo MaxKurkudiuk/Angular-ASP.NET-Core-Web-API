@@ -8,3 +8,5 @@
 /AuthECAPI/AuthECAPI/bin/Debug/net10.0
 improvements ideas/*
 /AuthECAPI/improvements ideas/server
+/AuthECAPI/AuthECAPI.Tests/bin
+/AuthECAPI/AuthECAPI.Tests/obj
