@@ -6,6 +6,7 @@ A full-stack authentication system with **Angular 21** frontend and **ASP.NET Co
 
 ### Backend (`AuthECAPI`)
 - **ASP.NET Core 10** — Minimal APIs + Controllers
+- **Clean Architecture** — Core / Application / Infrastructure / Extensions / Controllers
 - **ASP.NET Core Identity** — User management & authentication
 - **Entity Framework Core** — SQL Server (InMemory for tests)
 - **JWT Bearer Authentication** — Token-based auth
@@ -42,8 +43,7 @@ dotnet user-secrets set "ConnectionStrings:DevConnection" "Server=YOUR_SERVER;Da
 dotnet user-secrets set "AppSettings:JWTSeecret" "GiveASecretKeyHavingAtLeast32Characters" --project AuthECAPI/AuthECAPI.csproj
 
 # Run the API
-cd AuthECAPI
-dotnet run
+dotnet run --project AuthECAPI/AuthECAPI.csproj
 ```
 
 The API starts at `http://localhost:5292`. Swagger UI is available at `/swagger`.
@@ -78,37 +78,59 @@ Navigate to `http://localhost:4200/`. The app auto-reloads on file changes.
 ## Project Structure
 
 ```
-├── AuthECAPI/                    # ASP.NET Core Web API
+├── AuthECAPI/                          # ASP.NET Core Web API (Clean Architecture)
 │   └── AuthECAPI/
-│       ├── Controllers/          # API endpoints (Minimal APIs)
+│       ├── Core/                       # Domain layer — entities, enums, interfaces
+│       │   ├── Entities/
+│       │   │   └── AppUser.cs
+│       │   ├── Enums/
+│       │   │   └── Roles.cs
+│       │   └── Interfaces/
+│       │       ├── IAuthService.cs
+│       │       └── ITokenService.cs
+│       ├── Application/                # Business logic — DTOs, services
+│       │   ├── Models/
+│       │   │   ├── AppSettings.cs
+│       │   │   ├── LoginModel.cs
+│       │   │   └── UserRegistrationModel.cs
+│       │   └── Services/
+│       │       ├── AuthService.cs
+│       │       └── TokenService.cs
+│       ├── Infrastructure/             # Data access & external concerns
+│       │   ├── Data/
+│       │   │   ├── AppDbContext.cs
+│       │   │   └── SeedData.cs
+│       │   └── Extensions/
+│       │       ├── AppConfigExtensions.cs
+│       │       ├── EFCoreExtensions.cs
+│       │       └── IdentityExtensions.cs
+│       ├── Extensions/                 # Presentation-level extensions
+│       │   └── OpenApiExtensions.cs
+│       ├── Controllers/                # API endpoints (Minimal APIs)
 │       │   ├── AccountEndpoints.cs
 │       │   ├── AuthorizationDemoEndpoints.cs
 │       │   ├── IdentityUserEndpoints.cs
 │       │   └── OrderEndpoints.cs
-│       ├── Shared/
-│       │   ├── Extensions/       # Service registration extensions
-│       │   ├── Models/           # AppUser, Roles, DbContext, etc.
-│       │   └── Services/         # TokenService, AuthService
 │       └── Program.cs
 │
-└── AuthECClient/                 # Angular Frontend
+└── AuthECClient/                       # Angular Frontend
     └── src/app/
         ├── core/
-        │   ├── guards/           # authGuard, isNotLoggedInGuard
-        │   ├── interceptors/     # JWT interceptor
-        │   └── services/         # auth.service, user.service
+        │   ├── guards/                 # authGuard, isNotLoggedInGuard
+        │   ├── interceptors/           # JWT interceptor
+        │   └── services/               # auth.service, user.service
         ├── layouts/
-        │   └── main-layout/      # Post-login sidebar layout
+        │   └── main-layout/            # Post-login sidebar layout
         └── shared/
             ├── components/
-            │   ├── user/         # Login & Registration forms
-            │   ├── dashboard/    # Welcome page
-            │   ├── forbidden/    # 403 page
-            │   └── authorizeDemo/ # Claim-based demo pages
-            ├── constants/        # localStorage keys
-            ├── directives/       # HideIfClaimsNotMetDirective
-            ├── pipes/            # FirstKey pipe
-            └── utils/            # Claim requirement functions
+            │   ├── user/               # Login & Registration forms
+            │   ├── dashboard/          # Welcome page
+            │   ├── forbidden/          # 403 page
+            │   └── authorizeDemo/      # Claim-based demo pages
+            ├── constants/              # localStorage keys
+            ├── directives/             # HideIfClaimsNotMetDirective
+            ├── pipes/                  # FirstKey pipe
+            └── utils/                  # Claim requirement functions
 ```
 
 ## Features
