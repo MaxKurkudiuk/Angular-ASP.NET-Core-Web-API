@@ -1,6 +1,6 @@
 ﻿using AuthECAPI.Shared.Models;
 
-namespace AuthECAPI.Shared.Extensions;
+namespace AuthECAPI.Infrastructure.Extensions;
 
 public static class AppConfigExtensions
 {

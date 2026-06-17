@@ -1,6 +1,6 @@
 ﻿using Scalar.AspNetCore;
 
-namespace AuthECAPI.Shared.Extensions;
+namespace AuthECAPI.Extensions;
 
 public static class OpenApiExtensions
 {

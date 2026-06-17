@@ -1,8 +1,9 @@
 ﻿using AuthECAPI.Core.Entities;
 using AuthECAPI.Core.Enums;
+using AuthECAPI.Shared.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace AuthECAPI.Shared.Models;
+namespace AuthECAPI.Infrastructure.Data;
 
 public static class SeedData
 {

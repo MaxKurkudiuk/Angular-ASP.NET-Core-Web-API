@@ -1,7 +1,7 @@
-﻿using AuthECAPI.Shared.Models;
+﻿using AuthECAPI.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthECAPI.Shared.Extensions;
+namespace AuthECAPI.Infrastructure.Extensions;
 
 public static class EFCoreExtensions
 {

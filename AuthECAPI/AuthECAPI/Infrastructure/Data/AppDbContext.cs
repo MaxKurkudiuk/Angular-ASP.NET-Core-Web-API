@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthECAPI.Shared.Models;
+namespace AuthECAPI.Infrastructure.Data;
 
 public class AppDbContext : IdentityDbContext
 {

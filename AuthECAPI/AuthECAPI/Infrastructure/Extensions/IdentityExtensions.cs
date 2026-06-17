@@ -1,5 +1,5 @@
 ﻿using AuthECAPI.Core.Entities;
-using AuthECAPI.Shared.Models;
+using AuthECAPI.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
-namespace AuthECAPI.Shared.Extensions;
+namespace AuthECAPI.Infrastructure.Extensions;
 
 public static class IdentityExtensions
 {
