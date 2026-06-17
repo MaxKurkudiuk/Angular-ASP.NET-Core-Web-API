@@ -7,11 +7,19 @@ public static class SeedData
     public static async Task Initialize(IServiceProvider serviceProvider)
     {
         var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var context = serviceProvider.GetRequiredService<AppDbContext>();
 
         context.Database.EnsureCreated();
 
         if (context.Users.Any()) return;
+
+        var roles = new[] { nameof(Roles.Admin), nameof(Roles.Teacher), nameof(Roles.Student) };
+        foreach (var role in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+                await roleManager.CreateAsync(new IdentityRole(role));
+        }
 
         var users = new[]
         {
