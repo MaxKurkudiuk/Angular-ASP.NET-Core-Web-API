@@ -15,7 +15,7 @@ public static class IdentityUserEndpoints
     }
 
     [AllowAnonymous]
-    private static async Task<IResult> CreateUser(
+    internal static async Task<IResult> CreateUser(
         IAuthService authService,
         [FromBody] UserRegistrationModel userRegiastrationModel)
     {
@@ -26,7 +26,7 @@ public static class IdentityUserEndpoints
     }
 
     [AllowAnonymous]
-    private static async Task<IResult> SignIn(
+    internal static async Task<IResult> SignIn(
         IAuthService authService,
         [FromBody] LoginModel loginModel)
     {

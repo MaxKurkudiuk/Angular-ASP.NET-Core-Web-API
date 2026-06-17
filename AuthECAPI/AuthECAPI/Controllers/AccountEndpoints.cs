@@ -14,7 +14,7 @@ public static class AccountEndpoints
     }
 
     [Authorize]
-    private static async Task<IResult> GetUserProfile(
+    internal static async Task<IResult> GetUserProfile(
         ClaimsPrincipal user,
         UserManager<AppUser> userManager)
     {
