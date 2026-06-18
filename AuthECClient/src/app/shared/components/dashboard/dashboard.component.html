@@ -1,7 +1,19 @@
 <div class="text-center">
-  <h1 class="display-6">Welcome Aboard!</h1>
-  <h1 class="display-6 fw-bolder text-dark">{{ fullName() }}</h1>
-  <button [appHideIfClaimsNotMet]="claimReq.adminOnly" class="btn btn-danger">
-    Some Admin operation
-  </button>
+  <div class="bg-body-tertiary p-5 rounded">
+    <span class="badge bg-primary rounded-circle p-3 fs-5">
+      {{ appUser().initials || '?' }}
+    </span>
+    <h1 class="display-6">Welcome Aboard!</h1>
+    <div class="d-flex gap-2 justify-content-center py-1">
+      <h1 class="display-6 fw-bolder text-dark">
+        {{ appUser().fullName || 'Unknown User' }}
+      </h1>
+      <p class="text-muted">
+        {{ appUser().genderIcon }} {{ appUser().gender || 'Not specified' }}
+      </p>
+    </div>
+    <button [appHideIfClaimsNotMet]="claimReq.adminOnly" class="btn btn-danger">
+      Some Admin operation
+    </button>
+  </div>
 </div>

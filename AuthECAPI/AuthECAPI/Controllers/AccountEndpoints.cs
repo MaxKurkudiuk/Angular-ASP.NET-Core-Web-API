@@ -24,6 +24,7 @@ public static class AccountEndpoints
         {
             userDetails?.Email,
             userDetails?.FullName,
+            userDetails?.Gender
         });
     }
 }
