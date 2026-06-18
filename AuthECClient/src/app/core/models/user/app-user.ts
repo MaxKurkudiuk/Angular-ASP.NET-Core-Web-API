@@ -1,6 +1,10 @@
 export class AppUser {
+  public age: string = '';
+  public email: string = '';
   public fullName: string = '';
   public gender: string = '';
+  public libraryID: any = '';
+  public roles: Array<string> = [];
 
   get initials(): string {
     return this.fullName
