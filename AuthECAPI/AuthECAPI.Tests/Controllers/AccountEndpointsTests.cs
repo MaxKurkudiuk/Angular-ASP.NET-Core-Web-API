@@ -78,4 +78,68 @@ public class AccountEndpointsTests
         await Assert.ThrowsAsync<InvalidOperationException>(
             () => AccountEndpoints.GetUserProfile(principal, _accountServiceMock.Object));
     }
+
+    [Fact]
+    public async Task UpdateUserProfile_ExistingUser_ReturnsUpdatedProfile()
+    {
+        var userId = Guid.NewGuid().ToString();
+        var model = new UpdateUserProfileModel
+        {
+            FullName = "Updated Name",
+            Gender = "F",
+            Age = 25,
+            LibraryID = 123
+        };
+
+        var updatedProfile = new UserProfileResponse
+        {
+            Email = "test@example.com",
+            FullName = "Updated Name",
+            Age = "25",
+            Gender = "F",
+            Roles = new List<string> { "Student" },
+            LibraryID = 123
+        };
+
+        _accountServiceMock
+            .Setup(x => x.UpdateUserProfileAsync(userId, model))
+            .ReturnsAsync((updatedProfile, (string?)null));
+
+        var principal = CreateUser(userId);
+        var result = await AccountEndpoints.UpdateUserProfile(principal, _accountServiceMock.Object, model);
+
+        var returnValue = result.GetType().GetProperty("Value")!.GetValue(result)!;
+
+        Assert.Equal("Updated Name", returnValue.GetType().GetProperty("FullName")!.GetValue(returnValue));
+        Assert.Equal("F", returnValue.GetType().GetProperty("Gender")!.GetValue(returnValue));
+        Assert.Equal("25", returnValue.GetType().GetProperty("Age")!.GetValue(returnValue));
+        Assert.Equal(123, returnValue.GetType().GetProperty("LibraryID")!.GetValue(returnValue));
+    }
+
+    [Fact]
+    public async Task UpdateUserProfile_NonExistentUser_ReturnsBadRequest()
+    {
+        var userId = Guid.NewGuid().ToString();
+        var model = new UpdateUserProfileModel { FullName = "New Name" };
+
+        _accountServiceMock
+            .Setup(x => x.UpdateUserProfileAsync(userId, model))
+            .ReturnsAsync(((UserProfileResponse?)null, "User not found."));
+
+        var principal = CreateUser(userId);
+        var result = await AccountEndpoints.UpdateUserProfile(principal, _accountServiceMock.Object, model);
+
+        Assert.StartsWith("BadRequest", result.GetType().Name);
+    }
+
+    [Fact]
+    public async Task UpdateUserProfile_MissingUserIdClaim_Throws()
+    {
+        var identity = new ClaimsIdentity();
+        var principal = new ClaimsPrincipal(identity);
+        var model = new UpdateUserProfileModel { FullName = "New Name" };
+
+        await Assert.ThrowsAsync<InvalidOperationException>(
+            () => AccountEndpoints.UpdateUserProfile(principal, _accountServiceMock.Object, model));
+    }
 }
