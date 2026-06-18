@@ -11,4 +11,8 @@ export class UserService {
   getUserProfile() {
     return this.http.get(environment.apiBaseUrl + '/userprofile');
   }
+
+  updateProfile(profile: { fullName?: string; age?: number; gender?: string; libraryID?: string }) {
+    return this.http.put(environment.apiBaseUrl + '/userprofile', profile);
+  }
 }

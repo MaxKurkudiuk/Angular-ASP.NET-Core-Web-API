@@ -13,10 +13,19 @@
       <p class="mb-2"><span class="info-label">Age:</span> <span class="info-value">{{ appUser().age || 'N/A' }}</span></p>
       <p class="mb-2"><span class="info-label">Email:</span> <span class="info-value">{{ appUser().email || 'N/A' }}</span></p>
       <p class="mb-2"><span class="info-label">Library ID:</span> <span class="info-value">{{ appUser().libraryID || 'N/A' }}</span></p>
-      <p class="mb-2"><span class="info-label">Roles:</span> <span class="info-value">{{ appUser().roles?.length ? appUser().roles.join(', ') : 'N/A' }}</span></p>
+      <p class="mb-2"><span class="info-label">Roles:</span> <span class="info-value">
+        {{ appUser().roles.length ? appUser().roles.join(', ') : 'N/A' }}
+      </span></p>
     </div>
-    <button [appHideIfClaimsNotMet]="claimReq.adminOnly" class="btn action-btn mt-4">
+    <button [appHideIfClaimsNotMet]="claimReq.adminOnly" class="btn action-btn mt-3">
       Some Admin operation
+    </button>
+    <button class="btn edit-profile-btn mt-3" (click)="showProfileForm.set(true)">
+      Edit Profile
     </button>
   </div>
 </div>
+
+@if (showProfileForm()) {
+  <app-profile-form [user]="appUser()" (close)="onProfileUpdated(); showProfileForm.set(false)" />
+}

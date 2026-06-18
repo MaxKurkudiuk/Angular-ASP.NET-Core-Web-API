@@ -3,10 +3,11 @@ import { UserService } from '../../../core/services/user.service';
 import { HideIfClaimsNotMetDirective } from '../../directives/hide-if-claims-not-met.directive';
 import { claimReq } from '../../utils/claimReq-utils';
 import { AppUser } from '../../../core/models/user/app-user';
+import { ProfileFormComponent } from './profile-form/profile-form.component';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [HideIfClaimsNotMetDirective],
+  imports: [HideIfClaimsNotMetDirective, ProfileFormComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -14,6 +15,7 @@ export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
   claimReq = claimReq;
   appUser = signal<AppUser>(new AppUser());
+  showProfileForm = signal(false);
 
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe({
@@ -30,6 +32,14 @@ export class DashboardComponent implements OnInit {
         this.appUser.set(Object.assign(new AppUser(), res));  // variant 3
       },
       error: (err: any) => console.log('error while retreaving user profile: \n', err)
+    });
+  }
+
+  onProfileUpdated() {
+    this.userService.getUserProfile().subscribe({
+      next: (res: any) => {
+        this.appUser.set(Object.assign(new AppUser(), res));
+      },
     });
   }
 }
