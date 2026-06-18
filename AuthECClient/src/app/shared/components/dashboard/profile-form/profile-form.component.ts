@@ -20,9 +20,9 @@ export class ProfileFormComponent implements OnInit {
 
   form = this.formBuilder.group({
     fullName: ['', Validators.required],
-    age: [''],
-    gender: [''],
-    libraryID: [''],
+    age: ['', [Validators.min(1), Validators.max(120), Validators.required]],
+    gender: ['', Validators.required],
+    libraryID: ['', [Validators.min(1)]],
   });
 
   isSubmitted: boolean = false;

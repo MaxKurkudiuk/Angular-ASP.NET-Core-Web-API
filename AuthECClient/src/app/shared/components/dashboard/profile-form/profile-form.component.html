@@ -10,12 +10,22 @@
           <label class="form-label">Full Name</label>
           <input type="text" class="form-control" formControlName="fullName" (blur)="onBlurred()" />
           @if (hasDisplayableError('fullName')) {
-            <div class="error-feedback">Full name is required.</div>
+          <div class="error-feedback">Full name is required.</div>
           }
         </div>
         <div class="mb-3">
           <label class="form-label">Age</label>
           <input type="text" class="form-control" formControlName="age" (blur)="onBlurred()" />
+          @if (hasDisplayableError('age')) {
+          <div class="error-feedback">
+            @if (form.controls.age.hasError('required')) {
+            Please enter your age.
+            }
+            @else {
+            Please enter a valid age (1-120).
+            }
+          </div>
+          }
         </div>
         <div class="mb-3">
           <label class="form-label">Gender</label>
@@ -24,10 +34,16 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
+          @if (hasDisplayableError('gender')) {
+          <div class="error-feedback">Gender is required.</div>
+          }
         </div>
         <div class="mb-3">
           <label class="form-label">Library ID</label>
           <input type="text" class="form-control" formControlName="libraryID" (blur)="onBlurred()" />
+          @if (hasDisplayableError('libraryID')) {
+          <div class="error-feedback">Please enter a valid libraryID (1+).</div>
+          }
         </div>
       </div>
       <div class="modal-footer">
