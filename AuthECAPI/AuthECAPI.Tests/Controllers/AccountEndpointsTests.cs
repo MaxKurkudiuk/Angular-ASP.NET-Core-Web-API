@@ -1,20 +1,18 @@
 using System.Security.Claims;
+using AuthECAPI.Application.Models;
 using AuthECAPI.Controllers;
-using AuthECAPI.Core.Entities;
-using Microsoft.AspNetCore.Identity;
+using AuthECAPI.Core.Interfaces;
 using Moq;
 
 namespace AuthECAPI.Tests.Controllers;
 
 public class AccountEndpointsTests
 {
-    private readonly Mock<UserManager<AppUser>> _userManagerMock;
+    private readonly Mock<IAccountService> _accountServiceMock;
 
     public AccountEndpointsTests()
     {
-        var store = Mock.Of<IUserStore<AppUser>>();
-        _userManagerMock = new Mock<UserManager<AppUser>>(
-            store, null!, null!, null!, null!, null!, null!, null!, null!);
+        _accountServiceMock = new Mock<IAccountService>();
     }
 
     private static ClaimsPrincipal CreateUser(string userId)
@@ -28,31 +26,31 @@ public class AccountEndpointsTests
     public async Task GetUserProfile_ExistingUser_ReturnsUserData()
     {
         var userId = Guid.NewGuid().ToString();
-        var user = new AppUser
+        var profile = new UserProfileResponse
         {
-            Id = userId,
             Email = "test@example.com",
             FullName = "Test User",
-            UserName = "test@example.com"
+            Age = "36",
+            Gender = "M",
+            Roles = new List<string>(),
+            LibraryID = null
         };
 
-        _userManagerMock
-            .Setup(x => x.FindByIdAsync(userId))
-            .ReturnsAsync(user);
+        _accountServiceMock
+            .Setup(x => x.GetUserProfileAsync(userId))
+            .ReturnsAsync(profile);
 
         var principal = CreateUser(userId);
-        var result = await AccountEndpoints.GetUserProfile(principal, _userManagerMock.Object);
+        var result = await AccountEndpoints.GetUserProfile(principal, _accountServiceMock.Object);
 
-        Assert.IsAssignableFrom<Microsoft.AspNetCore.Http.IResult>(result);
-        Assert.StartsWith("Ok", result.GetType().Name);
+        var okResult = Assert.IsAssignableFrom<Microsoft.AspNetCore.Http.IResult>(result);
+        var returnValue = result.GetType().GetProperty("Value")!.GetValue(result)!;
 
-        var value = result.GetType().GetProperty("Value")!.GetValue(result);
-        var emailProp = value!.GetType().GetProperty("Email");
-        var fullNameProp = value.GetType().GetProperty("FullName");
-        Assert.NotNull(emailProp);
-        Assert.NotNull(fullNameProp);
-        Assert.Equal("test@example.com", emailProp.GetValue(value));
-        Assert.Equal("Test User", fullNameProp.GetValue(value));
+        Assert.Equal("test@example.com", returnValue.GetType().GetProperty("Email")!.GetValue(returnValue));
+        Assert.Equal("Test User", returnValue.GetType().GetProperty("FullName")!.GetValue(returnValue));
+        Assert.Equal("36", returnValue.GetType().GetProperty("Age")!.GetValue(returnValue));
+        Assert.Equal("M", returnValue.GetType().GetProperty("Gender")!.GetValue(returnValue));
+        Assert.Empty((IEnumerable<string>)returnValue.GetType().GetProperty("Roles")!.GetValue(returnValue)!);
     }
 
     [Fact]
@@ -60,23 +58,15 @@ public class AccountEndpointsTests
     {
         var userId = Guid.NewGuid().ToString();
 
-        _userManagerMock
-            .Setup(x => x.FindByIdAsync(userId))
-            .ReturnsAsync((AppUser?)null);
+        _accountServiceMock
+            .Setup(x => x.GetUserProfileAsync(userId))
+            .ReturnsAsync((UserProfileResponse?)null);
 
         var principal = CreateUser(userId);
-        var result = await AccountEndpoints.GetUserProfile(principal, _userManagerMock.Object);
+        var result = await AccountEndpoints.GetUserProfile(principal, _accountServiceMock.Object);
 
         Assert.IsAssignableFrom<Microsoft.AspNetCore.Http.IResult>(result);
         Assert.StartsWith("Ok", result.GetType().Name);
-
-        var value = result.GetType().GetProperty("Value")!.GetValue(result);
-        var emailProp = value!.GetType().GetProperty("Email");
-        var fullNameProp = value.GetType().GetProperty("FullName");
-        Assert.NotNull(emailProp);
-        Assert.NotNull(fullNameProp);
-        Assert.Null(emailProp.GetValue(value));
-        Assert.Null(fullNameProp.GetValue(value));
     }
 
     [Fact]
@@ -86,6 +76,6 @@ public class AccountEndpointsTests
         var principal = new ClaimsPrincipal(identity);
 
         await Assert.ThrowsAsync<InvalidOperationException>(
-            () => AccountEndpoints.GetUserProfile(principal, _userManagerMock.Object));
+            () => AccountEndpoints.GetUserProfile(principal, _accountServiceMock.Object));
     }
 }
