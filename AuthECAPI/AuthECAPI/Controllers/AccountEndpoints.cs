@@ -11,6 +11,7 @@ public static class AccountEndpoints
     {
         app.MapGet("/UserProfile", GetUserProfile);
         app.MapPut("/UserProfile", UpdateUserProfile);
+        app.MapDelete("/UserProfile", DeleteUserProfileAsync);
         return app;
     }
 
@@ -37,5 +38,19 @@ public static class AccountEndpoints
             return Results.BadRequest(new { Error = errorMessage });
 
         return Results.Ok(profile);
+    }
+
+    [Authorize]
+    internal static async Task<IResult> DeleteUserProfileAsync(
+        ClaimsPrincipal user,
+        IAccountService accountService)
+    {
+        var userId = user.Claims.First(x => x.Type == "userID").Value;
+        var (isSuccess, errorMessage) = await accountService.DeleteUserProfileAsync(userId);
+
+        if (!isSuccess)
+            return Results.BadRequest(new { Error = errorMessage });
+
+        return Results.Ok(new { Message = "User profile deleted successfully." });
     }
 }

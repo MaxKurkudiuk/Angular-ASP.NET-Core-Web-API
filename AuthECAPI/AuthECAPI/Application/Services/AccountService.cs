@@ -64,4 +64,17 @@ public class AccountService(UserManager<AppUser> userManager) : IAccountService
             LibraryID = userDetails.LibraryID
         }, null);
     }
+
+    public async Task<(bool isSuccess, string? ErrorMessage)> DeleteUserProfileAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user is null)
+            return (false, "User not found.");
+
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+            return (false, string.Join("; ", result.Errors.Select(e => e.Description)));
+
+        return (true, null);
+    }
 }
