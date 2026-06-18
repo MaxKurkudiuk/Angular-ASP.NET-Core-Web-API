@@ -8,7 +8,7 @@ import { AppUser } from '../../../core/models/user/app-user';
   selector: 'app-dashboard',
   imports: [HideIfClaimsNotMetDirective],
   templateUrl: './dashboard.component.html',
-  styles: ``,
+  styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
@@ -18,15 +18,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe({
       next: (res: any) => {
-        // const user = new AppUser();    // variant 1
+        const user = new AppUser();    // variant 1
         // user.fullName = res.fullName;
         // user.gender = res.gender;
         // this.appUser.set(user);
 
         // const user = new AppUser();    // variant 2
-        // Object.assign(user, res);
+        Object.assign(user, res);
         // this.appUser.set(user);
-        
+
         this.appUser.set(Object.assign(new AppUser(), res));  // variant 3
       },
       error: (err: any) => console.log('error while retreaving user profile: \n', err)
