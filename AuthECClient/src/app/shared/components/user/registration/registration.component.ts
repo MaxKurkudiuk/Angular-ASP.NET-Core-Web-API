@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FirstKeyPipe } from '../../../pipes/first-key.pipe';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './registration.component.html',
   styles: ``,
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
   formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -19,9 +19,6 @@ export class RegistrationComponent implements OnInit {
   isSubmitted: boolean = false;
   isSubmitting: boolean = false;
   currentStep: number = 1;
-
-  ngOnInit(): void {
-  }
 
   passwordMatchValidator: ValidatorFn = (control: AbstractControl): null => {
     const password = control.get('password')
@@ -71,7 +68,7 @@ export class RegistrationComponent implements OnInit {
     const email = formValue.email;
     const password = formValue.password;
     delete formValue.confirmPassword;
-    formValue.age = formValue.age ? Number(formValue.age) : null;
+    formValue.age = Number(formValue.age);
     formValue.libraryID = formValue.libraryID ? Number(formValue.libraryID) : null;
     this.isSubmitting = true;
     this.authService.createUser(formValue)

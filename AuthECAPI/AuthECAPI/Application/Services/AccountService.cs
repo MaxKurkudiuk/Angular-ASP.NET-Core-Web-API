@@ -39,23 +39,15 @@ public class AccountService(
 
         var claimsChanged = false;
 
-        if (model.FullName is not null)
+        var isFullNameChanged = userDetails.FullName != model.FullName;
+        var isGenderChanged = userDetails.Gender != model.Gender;
+        var isAgeChanged = userDetails.DOB.Year != DateTime.Now.AddYears(-model.Age).Year;
+        var isLibraryIdChanged = userDetails.LibraryID != model.LibraryID;
+        if (isFullNameChanged || isGenderChanged || isAgeChanged || isLibraryIdChanged)
+        {
             userDetails.FullName = model.FullName;
-
-        if (model.Gender is not null)
-        {
             userDetails.Gender = model.Gender;
-            claimsChanged = true;
-        }
-
-        if (model.Age is not null)
-        {
-            userDetails.DOB = DateOnly.FromDateTime(DateTime.Now.AddYears(-model.Age.Value));
-            claimsChanged = true;
-        }
-
-        if (model.LibraryID is not null)
-        {
+            userDetails.DOB = DateOnly.FromDateTime(DateTime.Now.AddYears(-model.Age));
             userDetails.LibraryID = model.LibraryID;
             claimsChanged = true;
         }
