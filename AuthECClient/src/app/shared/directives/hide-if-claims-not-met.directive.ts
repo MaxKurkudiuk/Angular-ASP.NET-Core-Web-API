@@ -1,19 +1,22 @@
-import { Directive, ElementRef, inject, Input, OnInit } from '@angular/core';
+import { Directive, effect, ElementRef, inject, Input } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 
 @Directive({
   selector: '[appHideIfClaimsNotMet]',
 })
-export class HideIfClaimsNotMetDirective implements OnInit {
+export class HideIfClaimsNotMetDirective {
   @Input("appHideIfClaimsNotMet") claimReq!: Function;
 
   private authService = inject(AuthService);
   private elementRef = inject(ElementRef);
 
-  ngOnInit(): void {
-    const claims = this.authService.getClaims();
-    // console.log("claims:", claims);
-    if (!this.claimReq(claims))
-      this.elementRef.nativeElement.style.display = "none";
+  constructor() {
+    effect(() => {
+      const claims = this.authService.claims();
+      if (this.claimReq && !this.claimReq(claims))
+        this.elementRef.nativeElement.style.display = "none";
+      else
+        this.elementRef.nativeElement.style.display = "";
+    });
   }
 }

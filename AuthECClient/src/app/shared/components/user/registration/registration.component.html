@@ -7,67 +7,135 @@
     <a routerLink="/signin" class="text-decoration-none fw-medium text-success d-inline-block">Sign in</a>
   </div>
 </div>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="mb-3">
-    <input class="form-control bg-body-secondary" 
-    placeholder="Full Name" formControlName="fullName">
-    @if (hasDisplayableError('fullName') && form.controls.fullName.hasError('required')) {
-      <div class="error-feedback">
-        Please enter your full name.
-      </div>
-    }
+
+<div class="progress mb-4" style="height: 8px;">
+  <div class="progress-bar bg-success" role="progressbar"
+       [style.width.%]="currentStep === 1 ? 50 : 100"
+       [attr.aria-valuenow]="currentStep === 1 ? 50 : 100"
+       aria-valuemin="0" aria-valuemax="100">
   </div>
-  <div class="mb-3">
-    <input class="form-control bg-body-secondary" 
-    placeholder="Email" formControlName="email">
-    @if (hasDisplayableError('email')) {
-      <div class="error-feedback">
-        @if (form.controls.email.hasError('required')) {
-          Please enter your email address.
-        }
-        @if (form.controls.email.hasError('email')) {
-          Please enter a valid email address.
-        }
-      </div>
-    }
-  </div>
-  <div class="mb-3">
-    <input class="form-control bg-body-secondary" 
-    placeholder="Password" formControlName="password" type="password">
-    @if (hasDisplayableError('password')) {
-      <div class="error-feedback">
-        @switch (form.controls.password.errors | firstKey) {
-          @case ('required') {
-            <div>Please enter your password.</div>
-          }
-          @case ('minlength') {
-            <div>At least 6 characters required.</div>
-          }
-          @case ('lowercaseCharacter') {
-            <div>At least 1 lowercase character required.</div>
-          }
-          @case ('uppercaseCharacter') {
-            <div>At least 1 uppercase character required.</div>
-          }
-          @case ('pattern') {
-            <div>One or more specific character(s).</div>
-          }
+</div>
+
+<div class="d-flex justify-content-center mb-3 gap-4">
+  <span class="fw-medium" [class.text-success]="currentStep >= 1" [class.text-secondary]="currentStep < 1">
+    <span class="badge bg-success me-1" [class.bg-success]="currentStep >= 1" [class.bg-secondary]="currentStep < 1">1</span>
+    Account
+  </span>
+  <span class="text-secondary">→</span>
+  <span class="fw-medium" [class.text-success]="currentStep >= 2" [class.text-secondary]="currentStep < 2">
+    <span class="badge me-1" [class.bg-success]="currentStep >= 2" [class.bg-secondary]="currentStep < 2">2</span>
+    Profile
+  </span>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="currentStep === 1 ? nextStep() : onSubmit()">
+  @if (currentStep === 1) {
+    <div>
+      <div class="mb-3">
+        <input class="form-control bg-body-secondary"
+        placeholder="Full Name" formControlName="fullName">
+        @if (hasDisplayableError('fullName') && form.controls.fullName.hasError('required')) {
+          <div class="error-feedback">
+            Please enter your full name.
+          </div>
         }
       </div>
-    }
-  </div>
-  <div class="mb-3">
-    <input class="form-control bg-body-secondary" 
-    placeholder="Confirm Password" formControlName="confirmPassword" type="password">
-    @if (hasDisplayableError('confirmPassword') && form.controls.confirmPassword.hasError('passwordMismatch')) {
-      <div class="error-feedback">
-        Password doesn't match.
+      <div class="mb-3">
+        <input class="form-control bg-body-secondary"
+        placeholder="Email" formControlName="email">
+        @if (hasDisplayableError('email')) {
+          <div class="error-feedback">
+            @if (form.controls.email.hasError('required')) {
+              Please enter your email address.
+            }
+            @if (form.controls.email.hasError('email')) {
+              Please enter a valid email address.
+            }
+          </div>
+        }
       </div>
-    }
-  </div>
-  <div class="mt-4">
-    <button type="submit" class="btn btn-success w-100 rounded-3">
-      Register
-    </button>
-  </div>
+      <div class="mb-3">
+        <input class="form-control bg-body-secondary"
+        placeholder="Password" formControlName="password" type="password">
+        @if (hasDisplayableError('password')) {
+          <div class="error-feedback">
+            @switch (form.controls.password.errors | firstKey) {
+              @case ('required') {
+                <div>Please enter your password.</div>
+              }
+              @case ('minlength') {
+                <div>At least 6 characters required.</div>
+              }
+              @case ('lowercaseCharacter') {
+                <div>At least 1 lowercase character required.</div>
+              }
+              @case ('uppercaseCharacter') {
+                <div>At least 1 uppercase character required.</div>
+              }
+              @case ('pattern') {
+                <div>One or more specific character(s).</div>
+              }
+            }
+          </div>
+        }
+      </div>
+      <div class="mb-3">
+        <input class="form-control bg-body-secondary"
+        placeholder="Confirm Password" formControlName="confirmPassword" type="password">
+        @if (hasDisplayableError('confirmPassword') && form.controls.confirmPassword.hasError('passwordMismatch')) {
+          <div class="error-feedback">
+            Password doesn't match.
+          </div>
+        }
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-success w-100 rounded-3">
+          Next →
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (currentStep === 2) {
+    <div>
+      <div class="mb-3">
+        <select class="form-control bg-body-secondary" formControlName="gender">
+          <option value="" disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        @if (hasDisplayableError('gender') && form.controls.gender.hasError('required')) {
+          <div class="error-feedback">
+            Please select your gender.
+          </div>
+        }
+      </div>
+      <div class="mb-3">
+        <input class="form-control bg-body-secondary"
+        placeholder="Age" formControlName="age" type="number">
+        @if (hasDisplayableError('age')) {
+          <div class="error-feedback">
+            @if (form.controls.age.hasError('required')) {
+              Please enter your age.
+            }
+            @if (form.controls.age.hasError('min') || form.controls.age.hasError('max')) {
+              Please enter a valid age (1-120).
+            }
+          </div>
+        }
+      </div>
+      <div class="mb-3">
+        <input class="form-control bg-body-secondary"
+        placeholder="Library ID (optional)" formControlName="libraryID" type="number">
+      </div>
+      <div class="mt-4 d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary w-50 rounded-3" (click)="prevStep()">
+          ← Back
+        </button>
+        <button type="submit" class="btn btn-success w-50 rounded-3" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Registering...' : 'Register' }}
+        </button>
+      </div>
+    </div>
+  }
 </form>

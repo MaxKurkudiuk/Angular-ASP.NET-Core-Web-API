@@ -1,6 +1,7 @@
-import { Component, EventEmitter, inject, input, output, OnInit } from '@angular/core';
+import { Component, inject, input, output, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../../core/services/auth.service';
 import { UserService } from '../../../../core/services/user.service';
 import { AppUser } from '../../../../core/models/user/app-user';
 
@@ -12,6 +13,7 @@ import { AppUser } from '../../../../core/models/user/app-user';
 })
 export class ProfileFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
   private userService = inject(UserService);
   private toastr = inject(ToastrService);
 
@@ -47,7 +49,10 @@ export class ProfileFormComponent implements OnInit {
       if (value.gender != null && value.gender !== '') profileData.gender = value.gender;
       if (value.libraryID != null && value.libraryID !== '') profileData.libraryID = value.libraryID;
       this.userService.updateProfile(profileData).subscribe({
-        next: () => {
+        next: (res: any) => {
+          if (res.token) {
+            this.authService.saveToken(res.token);
+          }
           this.toastr.success('Profile updated successfully');
           this.close.emit();
         },
