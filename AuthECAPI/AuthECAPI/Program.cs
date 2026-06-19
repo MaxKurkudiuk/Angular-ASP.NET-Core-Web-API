@@ -42,6 +42,7 @@ app.MapGroup("/api")
 app.MapGroup("/api")
    .MapIdentityUserEndpoints()
    .MapAccountEndpoints()
+   .MapAdminEndpoints()
    .MapAuthorizationDemoEndpoints();
 app.AddSeedData();      // add test data
 

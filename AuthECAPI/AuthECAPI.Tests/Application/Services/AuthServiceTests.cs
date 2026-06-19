@@ -29,11 +29,7 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             Password = "P@ssw0rd!",
-            FullName = "Test User",
-            Role = "Student",
-            Gender = "Male",
-            Age = 25,
-            LibraryID = 123
+            FullName = "Test User"
         };
 
         userManagerMock
@@ -41,7 +37,7 @@ public class AuthServiceTests
             .ReturnsAsync(IdentityResult.Success);
 
         userManagerMock
-            .Setup(x => x.AddToRoleAsync(It.IsAny<AppUser>(), model.Role))
+            .Setup(x => x.AddToRoleAsync(It.IsAny<AppUser>(), "Student"))
             .ReturnsAsync(IdentityResult.Success);
 
         var service = new AuthService(userManagerMock.Object, tokenServiceMock.Object);
@@ -52,7 +48,7 @@ public class AuthServiceTests
             It.Is<AppUser>(u => u.Email == model.Email && u.FullName == model.FullName),
             model.Password), Times.Once);
         userManagerMock.Verify(x => x.AddToRoleAsync(
-            It.Is<AppUser>(u => u.Email == model.Email), model.Role), Times.Once);
+            It.Is<AppUser>(u => u.Email == model.Email), "Student"), Times.Once);
     }
 
     [Fact]
@@ -64,10 +60,7 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             Password = "P@ssw0rd!",
-            FullName = "Test User",
-            Role = "Student",
-            Gender = "Male",
-            Age = 25
+            FullName = "Test User"
         };
 
         var identityError = new IdentityError { Code = "DuplicateEmail", Description = "Email already exists." };

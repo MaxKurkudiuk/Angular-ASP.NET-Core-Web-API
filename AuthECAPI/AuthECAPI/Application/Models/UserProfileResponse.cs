@@ -8,4 +8,5 @@ public class UserProfileResponse
     public string? Gender { get; set; }
     public IList<string> Roles { get; set; } = [];
     public int? LibraryID { get; set; }
+    public string? Token { get; set; }
 }

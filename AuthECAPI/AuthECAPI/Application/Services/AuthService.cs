@@ -19,9 +19,28 @@ public class AuthService(UserManager<AppUser> userManager, ITokenService tokenSe
             FullName = model.FullName,
             Gender = model.Gender,
             DOB = DateOnly.FromDateTime(DateTime.Now.AddYears(-model.Age)),
-            LibraryID = model.LibraryID
+            LibraryID = model.LibraryID,
         };
 
+        var result = await _userManager.CreateAsync(user, model.Password);
+        if (!result.Succeeded)
+            return result;
+
+        await _userManager.AddToRoleAsync(user, nameof(Core.Enums.Roles.Student));
+        return result;
+    }
+
+    public async Task<IdentityResult> AdminCreateUserAsync(AdminCreateUserModel model)
+    {
+        var user = new AppUser
+        {
+            UserName = model.Email,
+            Email = model.Email,
+            FullName = model.FullName,
+            Gender = model.Gender,
+            DOB = DateOnly.FromDateTime(DateTime.Now.AddYears(-model.Age)),
+            LibraryID = model.LibraryID,
+        };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (!result.Succeeded)
             return result;

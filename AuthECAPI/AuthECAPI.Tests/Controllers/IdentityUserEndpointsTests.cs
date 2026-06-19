@@ -25,11 +25,7 @@ public class IdentityUserEndpointsTests
         {
             Email = "test@example.com",
             Password = "P@ssw0rd!",
-            FullName = "Test User",
-            Role = "Student",
-            Gender = "Male",
-            Age = 25,
-            LibraryID = 123
+            FullName = "Test User"
         };
 
         _authServiceMock
@@ -53,10 +49,7 @@ public class IdentityUserEndpointsTests
         {
             Email = "duplicate@example.com",
             Password = "P@ssw0rd!",
-            FullName = "Test User",
-            Role = "Student",
-            Gender = "Male",
-            Age = 25
+            FullName = "Test User"
         };
 
         var identityError = new IdentityError
