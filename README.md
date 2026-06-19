@@ -24,6 +24,7 @@ A full-stack authentication system with **Angular 21** frontend and **ASP.NET Co
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [Node.js](https://nodejs.org/) >= 18
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - SQL Server (or use InMemory for testing)
 
 ## Getting Started
@@ -61,6 +62,35 @@ ng serve
 ```
 
 Navigate to `http://localhost:4200/`. The app auto-reloads on file changes.
+
+### 3. Docker
+
+Run the entire stack (API, frontend, and SQL Server) with a single command:
+
+```bash
+# Set required environment variables
+$env:MSSQL_SA_PASSWORD="YourStrong!Passw0rd"
+$env:JWT_SECRET="GiveASecretKeyHavingAtLeast32Characters"
+
+# Start all services
+docker compose up -d
+```
+
+- **Frontend** — `http://localhost:4200`
+- **API** — `http://localhost:5292`
+- **SQL Server** — `localhost:1433` (host)
+
+The SQL Server data persists in a named volume (`sqlserver-data`). To stop:
+
+```bash
+docker compose down
+```
+
+To also remove the volume:
+
+```bash
+docker compose down -v
+``` 
 
 ## API Endpoints
 

@@ -82,12 +82,12 @@ public static class IdentityExtensions
 
     public static WebApplication AddSeedData(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
+        //if (app.Environment.IsDevelopment())
+        //{
+        //}
+        using (var scope = app.Services.CreateScope())
         {
-            using (var scope = app.Services.CreateScope())
-            {
-                SeedData.Initialize(scope.ServiceProvider).Wait();
-            }
+            SeedData.Initialize(scope.ServiceProvider).Wait();
         }
         return app;
     }

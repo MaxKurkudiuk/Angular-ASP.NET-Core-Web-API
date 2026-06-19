@@ -11,3 +11,4 @@ improvements ideas/*
 /AuthECAPI/AuthECAPI.Tests/bin
 /AuthECAPI/AuthECAPI.Tests/obj
 /AuthECAPI/testing-plan.md
+*.env
