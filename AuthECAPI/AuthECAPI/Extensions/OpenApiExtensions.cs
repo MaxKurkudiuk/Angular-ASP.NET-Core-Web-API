@@ -13,17 +13,8 @@ public static class OpenApiExtensions
 
     public static WebApplication ConfigureOpenApiExplorer(this WebApplication app)
     {
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi().AllowAnonymous();
-            // Map the visual UI page (e.g., /scalar/v1)
-            app.MapScalarApiReference("/scalar").AllowAnonymous();
-        } else
-        {
-            //app.MapOpenApi();
-            //app.MapScalarApiReference();
-        }
+        app.MapOpenApi().AllowAnonymous();
+        app.MapScalarApiReference("/scalar").AllowAnonymous();
         return app;
     }
 }
