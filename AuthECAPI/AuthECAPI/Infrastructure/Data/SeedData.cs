@@ -2,6 +2,9 @@
 using AuthECAPI.Core.Entities;
 using AuthECAPI.Core.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
+using Polly;
+using Polly.Retry;
 
 namespace AuthECAPI.Infrastructure.Data;
 
@@ -13,7 +16,22 @@ public static class SeedData
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var context = serviceProvider.GetRequiredService<AppDbContext>();
 
-        context.Database.EnsureCreated();
+        // 1. Configure the retry strategy
+        var retryPipeline = new ResiliencePipelineBuilder()
+            .AddRetry(new RetryStrategyOptions
+            {
+                // Only retry transient network/connection issues
+                ShouldHandle = new PredicateBuilder().Handle<SqlException>(),
+                MaxRetryAttempts = 15,
+                // Wait 2 seconds between attempts
+                Delay = TimeSpan.FromSeconds(2),
+                BackoffType = DelayBackoffType.Constant
+            })
+            .Build();
+
+        // 2. Execute your EF Core initialization safely
+        await retryPipeline.ExecuteAsync(async token =>
+            await context.Database.EnsureCreatedAsync(token));
 
         if (context.Users.Any()) return;
 
