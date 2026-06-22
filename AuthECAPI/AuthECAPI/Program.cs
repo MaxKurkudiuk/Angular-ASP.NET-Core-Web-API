@@ -42,6 +42,7 @@ try {
 
     // Configure the HTTP request pipeline.
     app.UseRouting();
+    app.UseHttpsRedirection();
     app.ConfigureOpenApiExplorer()
        .ConfigureCors(builder.Configuration)
        .AddIdentityAuthMiddlewares();
