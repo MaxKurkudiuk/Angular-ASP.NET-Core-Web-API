@@ -12,7 +12,9 @@ public static class EFCoreExtensions
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(
                 config.GetConnectionString("DevDB"),
-                sqlOptions => sqlOptions.EnableRetryOnFailure())
+                sqlOptions => sqlOptions.EnableRetryOnFailure()
+                    .CommandTimeout(60) // for free AZURE DB connection
+                )
         );
         return services;
     }
